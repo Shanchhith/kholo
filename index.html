@@ -228,7 +228,7 @@
         <p class="line" style="animation-delay:0.6699999999999999s">I turn once a day inside you,</p>
         <p class="line" style="animation-delay:0.99s">kept by a tiny clock behind your eyes,</p>
         <p class="line" style="animation-delay:1.31s">and broken by every night you stayed awake.</p>
-        <p class="line" style="animation-delay:1.63s">(Two words. Mind the spelling.)</p>
+        <p class="line" style="animation-delay:1.63s">(Two words. Thodi galat spelling chalegi.)</p>
       </div>
       <form id="form" autocomplete="off">
         <input id="answer" type="text" placeholder="type your answer" autocapitalize="off" autocorrect="off" spellcheck="false" inputmode="text">
@@ -267,11 +267,18 @@
   </main>
 
 <script>
-  const ENC = {"salt":"coaPiPvlv0tzsaUjrgTwvQ==","iv":"DnnL+bQVRMbQEfrf","data":"89np835Pn70a8h6OLU7Pl4aZJ3ZFqOjY2lqxngAelgDEK8QGALB2RiBjtQfHAeyJHoaz4psAH/0tV/JOneEA+Vvxaaj9MSAeaAX46ASh1lZ4T3wvHAnRnNiMPFOQkcFqmuylDXplTCZ0zYqGroJQrO4X+0wJrydUDse2hD32MHD5GW4SDb+xMcVJSxnYVunbRz6W5HFZ14AqAThWnnHvRaWRl3w4HJu1wWsQj9i6hs0CpTBWmN5yx2SNfaHxtMZnG8HkZhZ8aHD2zaWp+eeHH8Ls42jyKo4/6wFtE45rmChgx4g82BCj15MrdukhLYaZrYw4y0son61GoD6dKDvv+KUy4oI3U+0Mt/eXXKRSlBrMj+QxdYNq9oYYY7kvyIDovUlosdDcg5VeCJ08rTvZ6Ct7yh9Gqu4FLCP+bxTpcB8NzwYraUhxKuyb7N0vgkHEvKaVuDDif818US3dGrNVzO7IHkn3BzKBrKHU5Nlaufa1dwCcBb0h/6qpOi2oQOTaQeJlDAaedcsVh2h2b0kRlyTwJV4rT5gi3kpPFILtYv7HPkIc1T3iqJ60VtNwvcn0"};
+  const ENC = {"salt":"zL+pniM882NLRIxuJ3O+TQ==","iv":"arx4asbaHzzTm4J0","data":"x5C4OT1AtME3xuJ9257sx0UmfKWRjBA73l1MLEAcqflN6vMgukzRYvxeP0ZP38c4sGXKS0dtKukdMxOmj2h8KU7RQKiBU51fY5jxpyfzgVvk7BZGX/yyVV+hQGk2hAD+mW73qkHh+B5/sH0+9mIvoTllgkXLXXv6PculcX/liEipIR6jKlZ9EomKLgO/8gx6gPg8AOkys7kAEZ5T9Slzb4VuHX7j5MkOy0DZtauWf/Vr+MgKieoSPPIOEwJxwQYm3RPU+BwscK02e029PRaRvcPp67nJZbW6qzA9mE/5ZrGyI1DhG1Ghl1T/zsct/jp9s0hjtzj4QLQH59gbB3YC47R9sI/Bruee769VjwY/zmd2elTCBG1V6IDc287iuy5hR3y8gscMJs6uiV2TwgI+IXUqGvBLYXf1LPIYTqh3froaoWyN1vR2xBQXN3R5V8lKFfdpSBFO+VB0+w+jY67cgCX4eP2mAc4BSMZhPD1uFspNHw/atckvZBST2NLPk108sTIGkzKJVFTPXlnc7yMtC7duvsmptEu5nIMD7XmMd+aJlPGL/LsfMr3aUIPKeaDc"};
   const NTFY_TOPIC = 'meet-adi-r1eyi05frk2q52';
 
   const b64 = s => Uint8Array.from(atob(s), c => c.charCodeAt(0));
-  const norm = s => s.trim().toLowerCase().replace(/\s+/g, ' ');
+  
+  function skeleton(s) {
+    return s.toLowerCase()
+      .replace(/[^a-z]/g, '')
+      .replace(/s$/, '')
+      .replace(/[aeiouyh]/g, '')
+      .replace(/(.)\1+/g, '$1');
+  }
 
   async function decrypt(password) {
     const enc = new TextEncoder();
@@ -385,15 +392,15 @@
   const hints = [
     'nahi… bujho 🤔',
     'hint: it\'s a thing, not a person',
-    'hint: the second word has six letters and exactly one vowel — and it isn\'t a, e, i, o or u',
-    'you know the words. it\'s the spelling 🙄',
+    'hint: the first word is Latin for "about a day"',
+    'hint: the second word — your heart has one, so does the sea 🌊',
   ];
   let tries = 0;
 
   form.addEventListener('submit', async e => {
     e.preventDefault();
     armAudio();
-    const guess = norm(input.value);
+    const guess = skeleton(input.value);
     if (!guess) return;
     go.disabled = true;
     hint.textContent = '';
