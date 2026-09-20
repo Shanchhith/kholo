@@ -193,45 +193,14 @@
   .field:focus { border-color: #2d8a8a; box-shadow: 0 0 0 3px rgba(45,138,138,0.14); }
   .q-err { min-height: 1.2em; margin: -8px 0 10px; font-size: 0.8rem; color: #c25b52; }
 
-  /* ── prescription ────────────────────────────────────────────── */
-  #reveal { padding: 22px 18px 24px; }
-  .rx {
-    background: #fffdf7; border: 1px solid #e2dac5; border-radius: 8px;
-    box-shadow: 0 10px 26px rgba(0,0,0,0.10); text-align: left;
-    font-family: 'Courier Prime', ui-monospace, 'Courier New', monospace;
-    color: #3a3a34; overflow: hidden;
-    opacity: 0; animation: rise 0.9s ease 0.3s both;
+  /* ── blessing ────────────────────────────────────────────────── */
+  .sher-box { margin: 6px 0 4px; }
+  .sher-box .line.sher { font-size: 1.45rem; line-height: 1.45; margin: 0 0 6px; }
+  .sign {
+    font-family: 'Dancing Script', cursive; font-size: 1.5rem; color: #2f4f8a;
+    margin: 14px 0 0; text-align: right; padding-right: 8px;
+    opacity: 0; animation: rise 0.8s ease both;
   }
-  .rx-top { text-align: center; padding: 14px 14px 10px; border-bottom: 2px solid #2d8a8a; }
-  .rx-hosp { font-weight: 700; font-size: 0.82rem; letter-spacing: 0.12em; text-transform: uppercase; color: #2d8a8a; }
-  .rx-dept { font-size: 0.7rem; color: #8a8578; letter-spacing: 0.08em; margin-top: 3px; }
-  .rx-head { display: flex; align-items: baseline; gap: 10px; background: #2d8a8a; color: #fff; padding: 9px 14px; }
-  .rx-symbol { font-size: 1.4rem; font-weight: 700; line-height: 1; }
-  .rx-title { flex: 1; text-transform: uppercase; letter-spacing: 0.14em; font-size: 0.72rem; }
-  .rx-no { font-size: 0.7rem; opacity: 0.85; }
-  .rx-body { padding: 14px; display: flex; flex-direction: column; gap: 9px; }
-  .rx-line { display: flex; gap: 10px; align-items: baseline; font-size: 0.84rem; }
-  .rx-label { flex: 0 0 78px; text-transform: uppercase; font-size: 0.6rem; letter-spacing: 0.1em; color: #9a9486; }
-  .rx-value { flex: 1; word-break: break-word; }
-  .rx-rule { border-top: 1px dashed #ded6c0; margin: 3px 0; }
-  .rx-msg { display: flex; flex-direction: column; gap: 10px; padding: 4px 0; }
-  .rx-msg .line { font-size: 0.95rem; line-height: 1.65; color: #33443f; margin: 0; }
-  .rx-msg .line:first-child { font-family: 'Dancing Script', cursive; font-size: 1.85rem; color: #2d8a8a; text-align: center; line-height: 1.2; }
-  .rx-presc { display: flex; flex-direction: column; gap: 5px; }
-  .rx-presc .rx-label { flex: none; }
-  .rx-presc ul { margin: 2px 0 0; padding-left: 18px; }
-  .rx-presc li { font-size: 0.84rem; line-height: 1.55; margin: 0 0 4px; opacity: 0; animation: rise 0.6s ease both; }
-  .rx-foot { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 12px 14px 16px; border-top: 1px dashed #ded6c0; }
-  .rx-stamp {
-    border: 2px solid #c25b52; color: #c25b52; font-size: 0.64rem; letter-spacing: 0.18em;
-    padding: 4px 9px; border-radius: 4px; font-weight: 700; transform: rotate(-7deg);
-    opacity: 0; animation: stamp 0.5s cubic-bezier(.34,1.56,.64,1) both;
-  }
-  @keyframes stamp {
-    from { opacity: 0; transform: rotate(-7deg) scale(2.2); }
-    to   { opacity: 1; transform: rotate(-7deg) scale(1); }
-  }
-  .rx-sign { font-family: 'Dancing Script', cursive; font-size: 1.5rem; color: #2f4f8a; line-height: 1; }
 
   /* ── teaser ──────────────────────────────────────────────────── */
   .teaser {
@@ -275,7 +244,7 @@
 
   @media (prefers-reduced-motion: reduce) {
     .blob, .floaties, .lockicon, .dots::after { animation: none; }
-    .line, .rx, .rx-presc li, .rx-stamp, .shot, .waiting, .verdict, .q, .big-title, .big-text, .late, .teaser { animation-duration: 0.01s; }
+    .line, .sign, .shot, .waiting, .verdict, .q, .big-title, .big-text, .late, .teaser { animation-duration: 0.01s; }
   }
 </style>
 </head>
@@ -313,7 +282,7 @@
 
       <p class="waiting" id="waiting"></p>
       <p class="verdict" id="verdict"></p>
-      <p class="build">b202609201622</p>
+      <p class="build">b202609201628</p>
     </section>
 
     <!-- 2. congrats -->
@@ -347,30 +316,13 @@
         <polyline points="0,20 38,20 46,20 52,7 60,33 68,20 96,20 128,20 136,20 142,13 148,27 154,20 200,20 232,20 240,20 246,7 254,33 262,20 300,20"/>
       </svg>
       <p class="eyebrow">step 3 of 3</p>
-      <div class="rx">
-        <div class="rx-top">
-          <div class="rx-hosp">Sir J. J. Hospital · Mumbai</div>
-          <div class="rx-dept">Dept. of Good Nights</div>
-        </div>
-        <div class="rx-head">
-          <span class="rx-symbol">℞</span>
-          <span class="rx-title">Prescription</span>
-          <span class="rx-no" id="rxNo"></span>
-        </div>
-        <div class="rx-body">
-          <div class="rx-line"><span class="rx-label">Patient</span><span class="rx-value">Duggal sahab</span></div>
-          <div class="rx-line"><span class="rx-label">Date</span><span class="rx-value" id="rxDate"></span></div>
-          <div class="rx-line"><span class="rx-label">Complaint</span><span class="rx-value">Night shift. Again.</span></div>
-          <div class="rx-line"><span class="rx-label">Diagnosis</span><span class="rx-value">Smiled on command, then answered eight questions honestly. Clearly brilliant.</span></div>
-          <div class="rx-rule"></div>
-          <div class="rx-msg" id="rxMsg"></div>
-          <div class="rx-rule"></div>
-          <div class="rx-presc"><span class="rx-label">Prescribed</span><ul id="rxList"></ul></div>
-        </div>
-        <div class="rx-foot">
-          <span class="rx-stamp" id="rxStamp">BLESSED</span>
-          <span class="rx-sign">Shanchhith</span>
-        </div>
+      <p class="big-title">Shubh raatri, Duggal sahab 🌙</p>
+      <div class="sher-box">
+        <p class="line sher" style="animation-delay:1s">Raat ki har shift dua ke saath guzre,</p>
+        <p class="line sher" style="animation-delay:1.5s">har mareez tumhare haathon se theek ho jaaye,</p>
+        <p class="line sher" style="animation-delay:2s">farishte aaj tumhare ward mein hain,</p>
+        <p class="line sher" style="animation-delay:2.5s">aur thodi der mein, tumhare darwaze pe bhi 🕊️</p>
+        <p class="sign" style="animation-delay:3.2s">Shanchhith</p>
       </div>
 
       <div class="teaser" id="teaser">
@@ -386,8 +338,8 @@
   const NTFY_TOPIC = 'meet-adi-r1eyi05frk2q52';
   const APPROVE_TOPIC = 'kholo-ok-p7k4r3lvohb8f1';
   const QUIZ = [{"key":"Movies","q":"Teen favourite movies","note":"Sirf teen. Haan, mushkil hai.","multi":3,"ph":["pehli","doosri","teesri"]},{"key":"Shows","q":"Favourite shows","note":"How I Met Your Mother doesn't count. Sabko pata hai.","area":true,"ph":"jitne bhi ho"},{"key":"Travel","q":"Dream picnic ya travel spot","note":"Jahan jaana hai. Kabhi bhi.","area":true,"ph":"ek ya do jagah"},{"key":"Food","q":"Favourite food","note":"Diet wala answer nahi. Asli wala.","ph":"be honest"},{"key":"Colour","q":"Favourite colour","note":"I think pink suits you. But that's just one algorithm's opinion.","ph":"pink?"},{"key":"Chai","q":"Chai ya coffee?","note":"Iska ek sahi jawab hai. Soch ke likhna.","ph":"chai. obviously."},{"key":"Song","q":"Ek gaana jo aajkal loop pe hai","note":"The one you'd be slightly embarrassed to admit.","ph":"koi bhi"},{"key":"Laugh","q":"Ek cheez jo hamesha hasa deti hai","note":"Meme, memory, ya koi insaan.","area":true,"ph":"kuch bhi"}];
-  const RX = {"message":"Shubh raatri, Duggal sahab 🌙\n\n\"Lambi hai gham ki shaam, magar shaam hi to hai.\" Faiz wrote it about heartbreak. It works just as well for a night shift.\n\nThe angels are on shift with you tonight. May the pages be few, the chai be hot, and every patient sleep through till morning.\n\nStrength for the night, doctor. Subah ka rasta tum jaanti ho. You've walked it a hundred times.","prescribed":["One (1) calm night, taken with chai, repeat every four hours","Strength, as needed. Refills: unlimited.","Sleep, after the shift, not during. Doctor's orders, for the doctor."]};
   const TEASER_MINUTES = 30;
+  const BLESSING_LINES = 4;
 
   const $ = id => document.getElementById(id);
   try { ['kholo:stage', 'kholo:sentAt'].forEach(k => localStorage.removeItem(k)); } catch (_) {}
@@ -491,7 +443,7 @@
     } catch (err) {
       resetSendButton();
       verdict.innerHTML = 'Network ne dhokha de diya. Ek baar aur try karo.' +
-        '<br><span style="font-size:0.72rem;opacity:0.7">(' + String(err && err.message || err).slice(0, 80) + ' · b202609201622)</span>';
+        '<br><span style="font-size:0.72rem;opacity:0.7">(' + String(err && err.message || err).slice(0, 80) + ' · b202609201628)</span>';
       verdict.className = 'verdict nope show';
     }
   });
@@ -638,24 +590,7 @@
     }).join('\n');
     ping('🚪 QUIZ DONE. Her ' + TEASER_MINUTES + '-minute countdown just started. ORDER THE FLOWERS NOW.\n\n' + summary);
 
-    const msg = $('rxMsg');
-    RX.message.split(/\n\s*\n/).map(p => p.trim()).filter(Boolean).forEach((p, i) => {
-      const el = document.createElement('p');
-      el.className = 'line'; el.textContent = p;
-      el.style.animationDelay = (0.9 + i * 0.45) + 's';
-      msg.appendChild(el);
-    });
-    const list = $('rxList');
-    RX.prescribed.forEach((item, i) => {
-      const li = document.createElement('li');
-      li.textContent = item; li.style.animationDelay = (1.9 + i * 0.35) + 's';
-      list.appendChild(li);
-    });
-    $('rxNo').textContent = 'No. ' + (Math.floor(Math.random() * 9000) + 1000);
-    $('rxDate').textContent = new Date().toLocaleDateString('en-IN', { day: 'numeric', month: 'short', year: 'numeric' });
-    const stampAt = 2.2 + RX.prescribed.length * 0.35;
-    $('rxStamp').style.animationDelay = stampAt + 's';
-    $('teaser').style.animationDelay = (stampAt + 1.1) + 's';
+    $('teaser').style.animationDelay = (1.6 + BLESSING_LINES * 0.5) + 's';
 
     showScreen($('quiz'), $('reveal'));
     setTimeout(() => {
