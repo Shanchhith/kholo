@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
+<meta name="theme-color" content="#fff6f1">
+<title>Kholo ✨</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&family=Dancing+Script:wght@700&display=swap" rel="stylesheet">
+<style>
+  * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+  html, body { margin: 0; height: 100%; font-family: 'Poppins', system-ui, sans-serif; color: #2a3a3a; }
+  body { background: #fff6f1; overflow: hidden; }
+
+  .bg { position: fixed; inset: 0; z-index: 0; overflow: hidden; }
+  .blob {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(70px);
+    opacity: 0.75;
+    animation: drift 24s ease-in-out infinite alternate;
+    will-change: transform;
+  }
+  .b1 { width: 60vmax; height: 60vmax; background: #a8edea; top: -22%; left: -18%; }
+  .b2 { width: 55vmax; height: 55vmax; background: #fed6e3; bottom: -22%; right: -18%; animation-delay: -8s; animation-duration: 28s; }
+  .b3 { width: 42vmax; height: 42vmax; background: #ffe9c7; top: 32%; left: 38%; animation-delay: -15s; animation-duration: 32s; }
+  @keyframes drift {
+    from { transform: translate(0, 0) scale(1); }
+    to   { transform: translate(9vw, -7vh) scale(1.18); }
+  }
+
+  .floaties { position: fixed; inset: 0; overflow: hidden; z-index: 1; pointer-events: none; }
+  .floaties span {
+    position: absolute; bottom: -12%; opacity: 0;
+    animation: floatUp linear infinite;
+  }
+  @keyframes floatUp {
+    0%   { transform: translateY(0) translateX(0) rotate(0deg); opacity: 0; }
+    12%  { opacity: 0.55; }
+    88%  { opacity: 0.4; }
+    100% { transform: translateY(-118vh) translateX(var(--drift, 30px)) rotate(var(--spin, 18deg)); opacity: 0; }
+  }
+
+  .stage {
+    position: relative; z-index: 2;
+    min-height: 100vh; min-height: 100dvh;
+    display: flex; align-items: center; justify-content: center;
+    padding: 24px 20px;
+    padding-top: max(24px, env(safe-area-inset-top));
+    padding-bottom: max(24px, env(safe-area-inset-bottom));
+  }
+
+  .screen {
+    width: 100%; max-width: 420px;
+    background: rgba(255,255,255,0.72);
+    backdrop-filter: blur(18px);
+    -webkit-backdrop-filter: blur(18px);
+    border: 1px solid rgba(255,255,255,0.8);
+    border-radius: 30px;
+    padding: 38px 28px 32px;
+    text-align: center;
+    box-shadow: 0 30px 70px rgba(45,90,90,0.14);
+    transition: opacity 0.6s ease, transform 0.6s cubic-bezier(.34,1.3,.64,1);
+  }
+  .screen.hidden { display: none; }
+  .screen.leaving { opacity: 0; transform: scale(0.94) translateY(-14px); pointer-events: none; }
+  .screen.entering { animation: enter 0.8s cubic-bezier(.34,1.3,.64,1) both; }
+  @keyframes enter {
+    from { opacity: 0; transform: scale(0.96) translateY(18px); }
+    to   { opacity: 1; transform: scale(1) translateY(0); }
+  }
+
+  .lockicon {
+    font-size: 2.6rem; line-height: 1;
+    display: inline-block;
+    animation: breathe 2.6s ease-in-out infinite;
+  }
+  @keyframes breathe {
+    0%, 100% { transform: scale(1); }
+    50%      { transform: scale(1.08); }
+  }
+  .lockicon.open { animation: unlock 0.7s cubic-bezier(.34,1.56,.64,1) both; }
+  @keyframes unlock {
+    0%   { transform: rotate(0) scale(1); }
+    40%  { transform: rotate(-14deg) scale(1.25); }
+    100% { transform: rotate(0) scale(1); }
+  }
+
+  .eyebrow {
+    margin: 14px 0 18px;
+    font-size: 0.68rem; letter-spacing: 0.2em; text-transform: uppercase;
+    color: #8bb3b3; font-weight: 600;
+  }
+
+  .riddle { margin: 0 0 26px; }
+  .line {
+    margin: 0 0 7px;
+    font-size: 1.02rem; line-height: 1.55; color: #3a4a4a;
+    opacity: 0;
+    animation: rise 0.75s cubic-bezier(.2,.7,.3,1) both;
+  }
+  .riddle .line:first-child {
+    font-family: 'Dancing Script', cursive;
+    font-size: 1.7rem; color: #2d8a8a; margin-bottom: 10px;
+  }
+  .riddle .line:last-child { font-size: 0.82rem; color: #7f9a9a; margin-top: 6px; }
+  @keyframes rise {
+    from { opacity: 0; transform: translateY(14px); filter: blur(4px); }
+    to   { opacity: 1; transform: translateY(0); filter: blur(0); }
+  }
+
+  form { display: flex; flex-direction: column; gap: 14px; align-items: center; }
+  input {
+    width: 100%;
+    font: inherit; font-size: 1.35rem; text-align: center;
+    color: #2d8a8a; letter-spacing: 0.08em;
+    background: transparent; border: none;
+    border-bottom: 2px solid #cfe4e2;
+    padding: 10px 4px;
+    outline: none;
+    transition: border-color 0.25s ease;
+  }
+  input::placeholder { color: #b7cfcd; letter-spacing: 0.02em; font-size: 1rem; }
+  input:focus { border-bottom-color: #2d8a8a; }
+  .btn {
+    border: none; border-radius: 999px;
+    padding: 14px 40px;
+    font: inherit; font-size: 1rem; font-weight: 600;
+    color: #fff;
+    background: linear-gradient(135deg, #4fc3c3, #2d8a8a);
+    box-shadow: 0 10px 24px rgba(45,138,138,0.28);
+    cursor: pointer;
+    transition: transform 0.15s ease, box-shadow 0.2s ease;
+  }
+  .btn:active { transform: scale(0.96); }
+  .btn[disabled] { opacity: 0.6; }
+
+  .hint { min-height: 1.4em; margin: 12px 0 0; font-size: 0.86rem; color: #c25b52; }
+  form.shake { animation: shake 0.45s ease; }
+  @keyframes shake {
+    10%, 90% { transform: translateX(-2px); }
+    20%, 80% { transform: translateX(4px); }
+    30%, 50%, 70% { transform: translateX(-7px); }
+    40%, 60% { transform: translateX(7px); }
+  }
+
+  .msg { margin: 20px 0 8px; text-align: left; }
+  .msg .line { font-size: 1.04rem; line-height: 1.7; color: #33443f; margin: 0 0 14px; }
+  .msg .line:first-child {
+    font-family: 'Dancing Script', cursive;
+    font-size: 1.9rem; color: #2d8a8a; text-align: center; margin-bottom: 18px;
+  }
+  .sign {
+    font-family: 'Dancing Script', cursive;
+    font-size: 1.6rem; color: #2f4f8a;
+    margin: 6px 0 0; text-align: right;
+    opacity: 0; animation: rise 0.8s ease both;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .blob, .floaties, .lockicon { animation: none; }
+    .line, .sign { animation-duration: 0.01s; }
+  }
+</style>
+</head>
+<body>
+
+  <div class="bg"><div class="blob b1"></div><div class="blob b2"></div><div class="blob b3"></div></div>
+  <div class="floaties" id="floaties" aria-hidden="true"></div>
+
+  <main class="stage">
+    <section class="screen" id="lock">
+      <div class="lockicon" id="lockIcon">🔒</div>
+      <p class="eyebrow">password protected</p>
+      <div class="riddle">
+        <p class="line" style="animation-delay:0.35s">Sirf ek password hai —</p>
+        <p class="line" style="animation-delay:0.6699999999999999s">the name of the only doctor</p>
+        <p class="line" style="animation-delay:0.99s">whose prescriptions I actually follow.</p>
+        <p class="line" style="animation-delay:1.31s">(5 letters. No "Dr".)</p>
+      </div>
+      <form id="form" autocomplete="off">
+        <input id="answer" type="text" placeholder="type your answer" autocapitalize="off" autocorrect="off" spellcheck="false" inputmode="text">
+        <button class="btn" id="go" type="submit">kholo ✨</button>
+      </form>
+      <p class="hint" id="hint"></p>
+    </section>
+
+    <section class="screen hidden" id="reveal">
+      <div class="lockicon open">🔓</div>
+      <div class="msg" id="msg"></div>
+      <p class="sign" id="sign">— Shanchhith</p>
+    </section>
+  </main>
+
+<script>
+  const ENC = {"salt":"2oV05Jg6uePJQyYN9FvgUg==","iv":"3JaZgf0RXx+Ceye9","data":"fXiVu6Nx4OylLuojzeG3cjdGAELtiebY4GfOhSPZSBtPH7jmNHxFCXKogThGrvH803xnIFmeDnVjR9gmldOd5kBQ7CF5VIQpPYXGYTTS0Y4NyG/R5hgXcICGbhEg6OlMvx4eII9LsXwVBWdKHnf1FNCadhLbsK+Tombi8TcoJgWppnylKUXBSf1yJoiUSgsPqSO6i5goOlyuGh/uG3CVL6ijlVtoc7bvX0injjUrVZTpfeYJvYLRBqVomhBjZy1+3Xw/F6k+P2WDfK5RfmJwC0GmmETnyOcfmFoN3T+2K1GlF1WhjYwFtz68t4ALGhL1f3MhkwcgFinHV5AnX9YlVEgmXOv74HPEe4xdVtnWcPES40Qm/pH0zf0ReTOVI6/+NnBeIOU="};
+  const NTFY_TOPIC = 'meet-adi-r1eyi05frk2q52';
+
+  const b64 = s => Uint8Array.from(atob(s), c => c.charCodeAt(0));
+
+  async function decrypt(password) {
+    const enc = new TextEncoder();
+    const baseKey = await crypto.subtle.importKey('raw', enc.encode(password), 'PBKDF2', false, ['deriveKey']);
+    const key = await crypto.subtle.deriveKey(
+      { name: 'PBKDF2', salt: b64(ENC.salt), iterations: 120000, hash: 'SHA-256' },
+      baseKey, { name: 'AES-GCM', length: 256 }, false, ['decrypt']);
+    const plain = await crypto.subtle.decrypt({ name: 'AES-GCM', iv: b64(ENC.iv) }, key, b64(ENC.data));
+    return new TextDecoder().decode(plain);
+  }
+
+  function ping(message) {
+    fetch('https://ntfy.sh/' + NTFY_TOPIC, { method: 'POST', body: message }).catch(() => {});
+  }
+
+  (function floaties() {
+    const wrap = document.getElementById('floaties');
+    const props = ['✨', '🌸', '💫', '✨', '🌷', '✨'];
+    for (let i = 0; i < 14; i++) {
+      const s = document.createElement('span');
+      s.textContent = props[Math.floor(Math.random() * props.length)];
+      s.style.left = Math.random() * 100 + 'vw';
+      s.style.fontSize = (0.8 + Math.random() * 1.1) + 'rem';
+      s.style.animationDuration = (14 + Math.random() * 12) + 's';
+      s.style.animationDelay = (Math.random() * 16) + 's';
+      s.style.setProperty('--drift', (Math.random() * 90 - 45) + 'px');
+      s.style.setProperty('--spin', (Math.random() * 50 - 25) + 'deg');
+      wrap.appendChild(s);
+    }
+  })();
+
+  const form = document.getElementById('form');
+  const input = document.getElementById('answer');
+  const hint = document.getElementById('hint');
+  const go = document.getElementById('go');
+  const lockScreen = document.getElementById('lock');
+  const reveal = document.getElementById('reveal');
+  const hints = [
+    'nahi… phir se socho 🙈',
+    'hint: 5 letters, starts with A',
+    'it\'s you, silly 🙄',
+  ];
+  let tries = 0;
+
+  form.addEventListener('submit', async e => {
+    e.preventDefault();
+    const guess = input.value.trim().toLowerCase();
+    if (!guess) return;
+    go.disabled = true;
+    hint.textContent = '';
+    try {
+      const text = await decrypt(guess);
+      unlock(text);
+    } catch (_) {
+      tries++;
+      hint.textContent = hints[Math.min(tries - 1, hints.length - 1)];
+      form.classList.remove('shake'); void form.offsetWidth; form.classList.add('shake');
+      input.select();
+      go.disabled = false;
+    }
+  });
+
+  function unlock(text) {
+    document.getElementById('lockIcon').textContent = '🔓';
+    document.getElementById('lockIcon').classList.add('open');
+    ping('She unlocked the message 🔓');
+
+    const msg = document.getElementById('msg');
+    const paras = text.split(/\n\s*\n/).map(p => p.trim()).filter(Boolean);
+    paras.forEach((p, i) => {
+      const el = document.createElement('p');
+      el.className = 'line';
+      el.textContent = p;
+      el.style.animationDelay = (0.55 + i * 0.42) + 's';
+      msg.appendChild(el);
+    });
+    document.getElementById('sign').style.animationDelay = (0.7 + paras.length * 0.42) + 's';
+
+    setTimeout(() => {
+      lockScreen.classList.add('leaving');
+      setTimeout(() => {
+        lockScreen.classList.add('hidden');
+        reveal.classList.remove('hidden');
+        reveal.classList.add('entering');
+      }, 520);
+    }, 650);
+  }
+
+  input.focus();
+</script>
+
+</body>
+</html>
