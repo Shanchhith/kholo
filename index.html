@@ -216,6 +216,39 @@
   }
   .rx-sign { font-family: 'Dancing Script', cursive; font-size: 1.5rem; color: #2f4f8a; line-height: 1; }
 
+  /* ── flowers ──────────────────────────────────────────────────── */
+  .flowers {
+    margin-top: 22px; padding-top: 20px;
+    border-top: 1px dashed #cfe4e2;
+    opacity: 0; animation: rise 0.8s ease both;
+  }
+  .flowers-title {
+    font-family: 'Dancing Script', cursive;
+    font-size: 1.7rem; color: #2d8a8a; margin: 0 0 6px;
+  }
+  .flowers-text {
+    font-size: 0.86rem; line-height: 1.55; color: #55706d;
+    margin: 0 0 14px; text-align: center;
+  }
+  .flowers form { display: flex; flex-direction: column; gap: 10px; }
+  .field {
+    width: 100%; font: inherit; font-size: 0.98rem; color: #2a3a3a;
+    background: rgba(255,255,255,0.85);
+    border: 1.5px solid #d9ece9; border-radius: 14px;
+    padding: 12px 14px; outline: none; text-align: left;
+    letter-spacing: 0; resize: vertical;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+  }
+  .field::placeholder { color: #a9c3c1; font-size: 0.92rem; }
+  .field:focus { border-color: #2d8a8a; box-shadow: 0 0 0 3px rgba(45,138,138,0.14); }
+  .flowers .btn { width: 100%; margin-top: 4px; }
+  .flowers-done {
+    display: none; margin: 12px 0 0;
+    font-size: 0.9rem; color: #2d8a8a; font-weight: 500; text-align: center;
+  }
+  .flowers-done.show { display: block; animation: rise 0.5s ease both; }
+  .flowers-done.err { color: #c25b52; }
+
   /* ── party popper ─────────────────────────────────────────────── */
   .pop {
     position: fixed; z-index: 400; pointer-events: none;
@@ -292,11 +325,25 @@
           <span class="rx-sign" id="rxSign"></span>
         </div>
       </div>
+
+      <div class="flowers" id="flowers">
+        <p class="flowers-title">Ek aur cheez 🌸</p>
+        <p class="flowers-text">
+          This manifestation requires some flowers. Please add your address
+          and a time you'd be at the hostel — this goes straight to Shanchhith's phone, nowhere else.
+        </p>
+        <form id="flowersForm" autocomplete="off">
+          <textarea id="addr" class="field" rows="3" placeholder="hostel address 📍" required></textarea>
+          <input id="when" class="field" type="text" placeholder="when you'd be there, e.g. Tuesday after 6pm 🕐" required>
+          <button class="btn" id="flowersGo" type="submit">bhej do 🌷</button>
+        </form>
+        <p class="flowers-done" id="flowersDone"></p>
+      </div>
     </section>
   </main>
 
 <script>
-  const ENC = {"salt":"kH3BlsD0+/6vRK6NwBwW7Q==","iv":"D3g5z4VeU4+sDtkr","data":"+AIBadAd1YYITRzJ/3s+cGuiCiCGVWpgXx1S9Fiw1QhqYoqcfpQFhk7a77Gxu90GQVTdKOhpxS2tS2ouXdVze1z6+aaaY0a05G+1WKT05HxjT9ic9mx42VyfHtrDJuRN72iWXXrFlUcJq5+x0PRkPI2/2bhlsENmTluPGVO+qTtAyyZr2/P4KqTsmzktqo22B7vt/Wpt6122rjrzupGWdfDbEmIO+0fyJASaJJBo3k5cFqTVm+9mrQjkKm3qa2FWj0wmB4Dini5f3//Afkcy8LOUqfjsN18mRhcvEre1E59tamPOnUVf8mooJK4TqCKB3fkdlZxRpgQyltALsju99xxNYu7DP/5K/ngVmaXXm8roTa4e7DWY+tENXj/DTPUbNou+LCVZsFGEoeTMfCSSvgYZr8qpglew3a/FsmQRJt+Yphk+/hsp0B2NoYzHgdpDM1j2GU29vneK28qQYGTSZhg73d2Eq1num7j+e08/9gSdnU4GCZw7NRTIY+kTI/nrA1l1OV5U/6NOGIWs5SRuNLL3VnHDUXsPNoxWRiDm6xkXS0YbeIA41UYgvwLWPvxAKutHQhN3cT7gibp6z6bFg4h0zRO+/hIQzuX2+6Oxo8/GV7nYWhd0OzUJ9aFkZleP2sHWSildW9WAxwPOHPZvR3Xo9JtOD+L7INFsQcRgeWOo7Vb5wXVsqVNG14qB04KY3qHayd3PAy4i9QPuBvObL276bsj1jUNW3a/NP62I+ZDhYgt80LAhdsln/U7SVU8HzxFP0OEgXwE4PkKinl+/PWZpg0v2/MVXD6wWoLu+HedcODnIqgKX0q0to6AaH9WEDD3uejrFZwSxCFm0hy2gMevyBqRNq7+4mMwsAG0FcIqIbtjM8UsP8/rSnMmU9tnr4c1P4el2drpsy5w2JJOw+YkHE0zaU3lm+xlAHzgjgwpzldvytINje0weLfIOF0Q5jHZwwklhwHhqF6CEP+XOZOZZ7Xu+wx/q8Sx/Tl5LX3K3zhhYcsbFF6VhYRS7nmoHG80EojzsMp5snPcX2X5URL7c3koMuIA6OJerLfu6mKQ="};
+  const ENC = {"salt":"EQ1yTIeNRpgXV1AwIEUuyg==","iv":"tBWptHHkxRYzgDuF","data":"s8iSM8g5ATARMf3qhAw+xYXNayE0R5NBZOcR9+U3ThDIvKzmX5dUcVKSctOBnOeGCLB0qUKJNkne4vG2RKOmnuKd3Wn9LaKUn1bLa2tjmUylsKDWh7gVoRfKsSC1P9RXu76LLoQtIyXEX4AZMDYTFK7v74GpPnWXYbSWViTHin3JFDzUFLw7PCaYSDBk+/RwtzYcQGoIjjnxSGnQ6kl1NFk3Eb5x5PZgz7lOIkY2BNIYTEPsx5hMwy9YtIC3LPwOBoYEoXprpYMQeTK7mXTBb3+Wt1V6vCu7+6g3z1QAQrDqjxD1jio44LQRzaahNoHVRv1akZkefFO3GZXKWlOJWhc16ifKgypnGZwuVOvQzAkxCx5alFTTqKzTccWY1j57mpgUcD7cJexGfhl0VssskcCXshqlo7yCYPbV39XRo6ARI8jHYlCBn3QKHi1c7AoASazvui+kfqsy/HuGdqNHN8L6crlZAiEhfb18JOspFa59NWyobGYF9UYry5Fvv6Lbprtzx9utnTw0xslYx1ld26Uq3BSYkEnCdWqeYuGXMD4QeZON1BXCueJJ63A5U1OHUoEoVcobsPhR93jhElaFP85vzdnIeXn4hkYYj5w9PnsPI7YqOyvdKrGNBvZOvZysNlYIOAOlsBFVB7LzyH1KlPiKf07X2fnB/4Hz9gzU+UevHF/TdOy3Cr8DI1/aHLc3jHHWpk9bANgAPgYf4EfH0P2r+S4X6d03/n+6zFpGW9eOQxln4MeM3HWGNR5Qa1S+y+fLTjRCJyXuswdQdxgx/lavx/UKNvf7uMNmaY41CY+lP+yb+FViCir+1t6ln0dr9mMtWIDzJi+Uz7RWgX3/mEHdG0lw2VFt5aZKzV+awejtAlKFyFeSjUuWmEXaXja/mWZQHJhXe2v6ixz+ZaaxAdmGt6k3TSKp3v8VdSPT/c1NAwHKQ7zmFkl1K5iuCtHavpNSnwnI7W1tgBKKXtmHP7KaibfaVajSHcngCtvketxFKSojwPs7V6AdkuNnXZvx96DAp4p+CNCoel2Zmcvcds8LYXFkOg/BkfzgsAkJiSQ="};
   const NTFY_TOPIC = 'meet-adi-r1eyi05frk2q52';
 
   const b64 = s => Uint8Array.from(atob(s), c => c.charCodeAt(0));
@@ -508,6 +555,7 @@
       list.appendChild(li);
     });
     document.getElementById('rxStamp').style.animationDelay = (2.2 + s.prescribed.length * 0.35) + 's';
+    document.getElementById('flowers').style.animationDelay = (3.1 + s.prescribed.length * 0.35) + 's';
 
     setTimeout(() => {
       lockScreen.classList.add('leaving');
@@ -519,6 +567,39 @@
       }, 520);
     }, 900);
   }
+
+  // ── flowers: address + time, confirmed delivered before saying so ──
+  const flowersForm = document.getElementById('flowersForm');
+  const flowersGo = document.getElementById('flowersGo');
+  const flowersDone = document.getElementById('flowersDone');
+
+  flowersForm.addEventListener('submit', async e => {
+    e.preventDefault();
+    const addr = document.getElementById('addr').value.trim();
+    const when = document.getElementById('when').value.trim();
+    if (!addr || !when) return;
+
+    flowersGo.disabled = true;
+    flowersGo.textContent = 'bhej rahe hain…';
+    flowersDone.className = 'flowers-done';
+
+    try {
+      const r = await fetch('https://ntfy.sh/' + NTFY_TOPIC, {
+        method: 'POST',
+        body: '🌸 Flowers — delivery details\n📍 ' + addr + '\n🕐 ' + when,
+      });
+      if (!r.ok) throw new Error('ntfy ' + r.status);
+      flowersForm.style.display = 'none';
+      flowersDone.textContent = '✓ Sent. The flowers are now Shanchhith\'s problem. 🌷';
+      flowersDone.classList.add('show');
+      burst(window.innerWidth / 2, window.innerHeight * 0.6, 40);
+    } catch (_) {
+      flowersGo.disabled = false;
+      flowersGo.textContent = 'bhej do 🌷';
+      flowersDone.textContent = 'Network ne dhokha de diya — ek baar aur try karo.';
+      flowersDone.classList.add('show', 'err');
+    }
+  });
 
   input.focus();
 </script>
