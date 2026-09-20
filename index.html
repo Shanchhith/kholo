@@ -6,7 +6,7 @@
 <meta name="theme-color" content="#fff6f1">
 <title>Kholo ✨</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&family=Dancing+Script:wght@700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&family=Dancing+Script:wght@700&family=Courier+Prime:wght@400;700&display=swap" rel="stylesheet">
 <style>
   * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
   html, body { margin: 0; height: 100%; font-family: 'Poppins', system-ui, sans-serif; color: #2a3a3a; }
@@ -14,10 +14,8 @@
 
   .bg { position: fixed; inset: 0; z-index: 0; overflow: hidden; }
   .blob {
-    position: absolute;
-    border-radius: 50%;
-    filter: blur(70px);
-    opacity: 0.75;
+    position: absolute; border-radius: 50%;
+    filter: blur(70px); opacity: 0.75;
     animation: drift 24s ease-in-out infinite alternate;
     will-change: transform;
   }
@@ -33,11 +31,12 @@
   .floaties span {
     position: absolute; bottom: -12%; opacity: 0;
     animation: floatUp linear infinite;
+    filter: drop-shadow(0 2px 3px rgba(0,0,0,0.06));
   }
   @keyframes floatUp {
     0%   { transform: translateY(0) translateX(0) rotate(0deg); opacity: 0; }
-    12%  { opacity: 0.55; }
-    88%  { opacity: 0.4; }
+    12%  { opacity: 0.6; }
+    88%  { opacity: 0.45; }
     100% { transform: translateY(-118vh) translateX(var(--drift, 30px)) rotate(var(--spin, 18deg)); opacity: 0; }
   }
 
@@ -45,19 +44,20 @@
     position: relative; z-index: 2;
     min-height: 100vh; min-height: 100dvh;
     display: flex; align-items: center; justify-content: center;
-    padding: 24px 20px;
+    padding: 24px 18px;
     padding-top: max(24px, env(safe-area-inset-top));
     padding-bottom: max(24px, env(safe-area-inset-bottom));
+    overflow-y: auto;
   }
 
   .screen {
-    width: 100%; max-width: 420px;
-    background: rgba(255,255,255,0.72);
+    width: 100%; max-width: 430px;
+    background: rgba(255,255,255,0.74);
     backdrop-filter: blur(18px);
     -webkit-backdrop-filter: blur(18px);
     border: 1px solid rgba(255,255,255,0.8);
     border-radius: 30px;
-    padding: 38px 28px 32px;
+    padding: 36px 26px 30px;
     text-align: center;
     box-shadow: 0 30px 70px rgba(45,90,90,0.14);
     transition: opacity 0.6s ease, transform 0.6s cubic-bezier(.34,1.3,.64,1);
@@ -71,14 +71,10 @@
   }
 
   .lockicon {
-    font-size: 2.6rem; line-height: 1;
-    display: inline-block;
+    font-size: 2.6rem; line-height: 1; display: inline-block;
     animation: breathe 2.6s ease-in-out infinite;
   }
-  @keyframes breathe {
-    0%, 100% { transform: scale(1); }
-    50%      { transform: scale(1.08); }
-  }
+  @keyframes breathe { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.08); } }
   .lockicon.open { animation: unlock 0.7s cubic-bezier(.34,1.56,.64,1) both; }
   @keyframes unlock {
     0%   { transform: rotate(0) scale(1); }
@@ -94,10 +90,8 @@
 
   .riddle { margin: 0 0 26px; }
   .line {
-    margin: 0 0 7px;
-    font-size: 1.02rem; line-height: 1.55; color: #3a4a4a;
-    opacity: 0;
-    animation: rise 0.75s cubic-bezier(.2,.7,.3,1) both;
+    margin: 0 0 7px; font-size: 1.02rem; line-height: 1.55; color: #3a4a4a;
+    opacity: 0; animation: rise 0.75s cubic-bezier(.2,.7,.3,1) both;
   }
   .riddle .line:first-child {
     font-family: 'Dancing Script', cursive;
@@ -111,26 +105,20 @@
 
   form { display: flex; flex-direction: column; gap: 14px; align-items: center; }
   input {
-    width: 100%;
-    font: inherit; font-size: 1.35rem; text-align: center;
-    color: #2d8a8a; letter-spacing: 0.08em;
-    background: transparent; border: none;
-    border-bottom: 2px solid #cfe4e2;
-    padding: 10px 4px;
-    outline: none;
+    width: 100%; font: inherit; font-size: 1.25rem; text-align: center;
+    color: #2d8a8a; letter-spacing: 0.05em;
+    background: transparent; border: none; border-bottom: 2px solid #cfe4e2;
+    padding: 10px 4px; outline: none;
     transition: border-color 0.25s ease;
   }
   input::placeholder { color: #b7cfcd; letter-spacing: 0.02em; font-size: 1rem; }
   input:focus { border-bottom-color: #2d8a8a; }
   .btn {
-    border: none; border-radius: 999px;
-    padding: 14px 40px;
-    font: inherit; font-size: 1rem; font-weight: 600;
-    color: #fff;
+    border: none; border-radius: 999px; padding: 14px 40px;
+    font: inherit; font-size: 1rem; font-weight: 600; color: #fff;
     background: linear-gradient(135deg, #4fc3c3, #2d8a8a);
     box-shadow: 0 10px 24px rgba(45,138,138,0.28);
-    cursor: pointer;
-    transition: transform 0.15s ease, box-shadow 0.2s ease;
+    cursor: pointer; transition: transform 0.15s ease;
   }
   .btn:active { transform: scale(0.96); }
   .btn[disabled] { opacity: 0.6; }
@@ -144,22 +132,85 @@
     40%, 60% { transform: translateX(7px); }
   }
 
-  .msg { margin: 20px 0 8px; text-align: left; }
-  .msg .line { font-size: 1.04rem; line-height: 1.7; color: #33443f; margin: 0 0 14px; }
-  .msg .line:first-child {
-    font-family: 'Dancing Script', cursive;
-    font-size: 1.9rem; color: #2d8a8a; text-align: center; margin-bottom: 18px;
+  /* ── prescription ─────────────────────────────────────────────── */
+  #reveal { padding: 22px 18px 24px; }
+  .rx {
+    background: #fffdf7;
+    border: 1px solid #e2dac5;
+    border-radius: 8px;
+    box-shadow: 0 10px 26px rgba(0,0,0,0.10);
+    text-align: left;
+    font-family: 'Courier Prime', ui-monospace, 'Courier New', monospace;
+    color: #3a3a34;
+    overflow: hidden;
+    opacity: 0; animation: rise 0.9s ease 0.3s both;
   }
-  .sign {
+  .rx-top {
+    text-align: center; padding: 14px 14px 10px;
+    border-bottom: 2px solid #2d8a8a;
+  }
+  .rx-hosp {
+    font-weight: 700; font-size: 0.82rem; letter-spacing: 0.12em;
+    text-transform: uppercase; color: #2d8a8a;
+  }
+  .rx-dept { font-size: 0.7rem; color: #8a8578; letter-spacing: 0.08em; margin-top: 3px; }
+  .rx-head {
+    display: flex; align-items: baseline; gap: 10px;
+    background: #2d8a8a; color: #fff; padding: 9px 14px;
+  }
+  .rx-symbol { font-size: 1.4rem; font-weight: 700; line-height: 1; }
+  .rx-title { flex: 1; text-transform: uppercase; letter-spacing: 0.14em; font-size: 0.72rem; }
+  .rx-no { font-size: 0.7rem; opacity: 0.85; }
+  .rx-body { padding: 14px; display: flex; flex-direction: column; gap: 9px; }
+  .rx-line { display: flex; gap: 10px; align-items: baseline; font-size: 0.84rem; }
+  .rx-label {
+    flex: 0 0 78px; text-transform: uppercase; font-size: 0.6rem;
+    letter-spacing: 0.1em; color: #9a9486;
+  }
+  .rx-value { flex: 1; word-break: break-word; }
+  .rx-rule { border-top: 1px dashed #ded6c0; margin: 3px 0; }
+  .rx-msg { display: flex; flex-direction: column; gap: 10px; padding: 4px 0; }
+  .rx-msg .line { font-size: 0.95rem; line-height: 1.65; color: #33443f; margin: 0; }
+  .rx-msg .line:first-child {
     font-family: 'Dancing Script', cursive;
-    font-size: 1.6rem; color: #2f4f8a;
-    margin: 6px 0 0; text-align: right;
-    opacity: 0; animation: rise 0.8s ease both;
+    font-size: 1.85rem; color: #2d8a8a; text-align: center; line-height: 1.2;
+  }
+  .rx-presc { display: flex; flex-direction: column; gap: 5px; }
+  .rx-presc .rx-label { flex: none; }
+  .rx-presc ul { margin: 2px 0 0; padding-left: 18px; }
+  .rx-presc li { font-size: 0.84rem; line-height: 1.55; margin: 0 0 4px; opacity: 0; animation: rise 0.6s ease both; }
+  .rx-foot {
+    display: flex; align-items: center; justify-content: space-between; gap: 12px;
+    padding: 12px 14px 16px; border-top: 1px dashed #ded6c0;
+  }
+  .rx-stamp {
+    border: 2px solid #c25b52; color: #c25b52;
+    font-size: 0.64rem; letter-spacing: 0.18em; padding: 4px 9px;
+    border-radius: 4px; font-weight: 700; transform: rotate(-7deg);
+    opacity: 0; animation: stamp 0.5s cubic-bezier(.34,1.56,.64,1) both;
+  }
+  @keyframes stamp {
+    from { opacity: 0; transform: rotate(-7deg) scale(2.2); }
+    to   { opacity: 1; transform: rotate(-7deg) scale(1); }
+  }
+  .rx-sign { font-family: 'Dancing Script', cursive; font-size: 1.5rem; color: #2f4f8a; line-height: 1; }
+
+  /* ── party popper ─────────────────────────────────────────────── */
+  .pop {
+    position: fixed; z-index: 400; pointer-events: none;
+    width: 10px; height: 16px; border-radius: 2px;
+    animation: popper var(--dur, 1.9s) cubic-bezier(.2,.8,.4,1) forwards;
+  }
+  .pop.emoji { width: auto; height: auto; background: none !important; font-size: 1.5rem; }
+  @keyframes popper {
+    0%   { transform: translate(0,0) rotate(0deg); opacity: 1; }
+    42%  { transform: translate(var(--px), var(--py)) rotate(var(--r1)); opacity: 1; }
+    100% { transform: translate(var(--fx), var(--fy)) rotate(var(--r2)); opacity: 0; }
   }
 
   @media (prefers-reduced-motion: reduce) {
     .blob, .floaties, .lockicon { animation: none; }
-    .line, .sign { animation-duration: 0.01s; }
+    .line, .rx, .rx-presc li, .rx-stamp { animation-duration: 0.01s; }
   }
 </style>
 </head>
@@ -173,10 +224,10 @@
       <div class="lockicon" id="lockIcon">🔒</div>
       <p class="eyebrow">password protected</p>
       <div class="riddle">
-        <p class="line" style="animation-delay:0.35s">Sirf ek password hai —</p>
-        <p class="line" style="animation-delay:0.6699999999999999s">the name of the only doctor</p>
-        <p class="line" style="animation-delay:0.99s">whose prescriptions I actually follow.</p>
-        <p class="line" style="animation-delay:1.31s">(5 letters. No "Dr".)</p>
+        <p class="line" style="animation-delay:0.35s">Password hint —</p>
+        <p class="line" style="animation-delay:0.6699999999999999s">the thing your night shifts</p>
+        <p class="line" style="animation-delay:0.99s">have completely destroyed.</p>
+        <p class="line" style="animation-delay:1.31s">(Two words. Spell it right, doctor.)</p>
       </div>
       <form id="form" autocomplete="off">
         <input id="answer" type="text" placeholder="type your answer" autocapitalize="off" autocorrect="off" spellcheck="false" inputmode="text">
@@ -186,17 +237,40 @@
     </section>
 
     <section class="screen hidden" id="reveal">
-      <div class="lockicon open">🔓</div>
-      <div class="msg" id="msg"></div>
-      <p class="sign" id="sign">— Shanchhith</p>
+      <div class="rx">
+        <div class="rx-top">
+          <div class="rx-hosp">Sir J. J. Hospital · Mumbai</div>
+          <div class="rx-dept">Dept. of Good Mornings</div>
+        </div>
+        <div class="rx-head">
+          <span class="rx-symbol">℞</span>
+          <span class="rx-title">Prescription</span>
+          <span class="rx-no" id="rxNo"></span>
+        </div>
+        <div class="rx-body">
+          <div class="rx-line"><span class="rx-label">Patient</span><span class="rx-value" id="rxPatient"></span></div>
+          <div class="rx-line"><span class="rx-label">Date</span><span class="rx-value" id="rxDate"></span></div>
+          <div class="rx-line"><span class="rx-label">Complaint</span><span class="rx-value" id="rxComplaint"></span></div>
+          <div class="rx-line"><span class="rx-label">Diagnosis</span><span class="rx-value" id="rxDiag"></span></div>
+          <div class="rx-rule"></div>
+          <div class="rx-msg" id="rxMsg"></div>
+          <div class="rx-rule"></div>
+          <div class="rx-presc"><span class="rx-label">Prescribed</span><ul id="rxList"></ul></div>
+        </div>
+        <div class="rx-foot">
+          <span class="rx-stamp" id="rxStamp">BLESSED</span>
+          <span class="rx-sign" id="rxSign"></span>
+        </div>
+      </div>
     </section>
   </main>
 
 <script>
-  const ENC = {"salt":"2oV05Jg6uePJQyYN9FvgUg==","iv":"3JaZgf0RXx+Ceye9","data":"fXiVu6Nx4OylLuojzeG3cjdGAELtiebY4GfOhSPZSBtPH7jmNHxFCXKogThGrvH803xnIFmeDnVjR9gmldOd5kBQ7CF5VIQpPYXGYTTS0Y4NyG/R5hgXcICGbhEg6OlMvx4eII9LsXwVBWdKHnf1FNCadhLbsK+Tombi8TcoJgWppnylKUXBSf1yJoiUSgsPqSO6i5goOlyuGh/uG3CVL6ijlVtoc7bvX0injjUrVZTpfeYJvYLRBqVomhBjZy1+3Xw/F6k+P2WDfK5RfmJwC0GmmETnyOcfmFoN3T+2K1GlF1WhjYwFtz68t4ALGhL1f3MhkwcgFinHV5AnX9YlVEgmXOv74HPEe4xdVtnWcPES40Qm/pH0zf0ReTOVI6/+NnBeIOU="};
+  const ENC = {"salt":"5VJRVXrgJwS8Z34G/2xpSg==","iv":"BjHzBNxG7FNMAUVQ","data":"rkhcNQUKk85f4JQ1Y0na0W1iaeGaYiyFGQaO9tI1FflewN/xKvFTwK3eiuWCLBZJsVOL6ErDWe5ZA40MugyX64ccssXt96tL/WlkMxcHCkRLrSx3qo3WY6IEaL19aeIlz+svnU6ue5EJROVUZpOJCBiONlTS1nKi3mvuuRwZ/315O3siVRZYuXu+ceO94PNdZmWbkl9O3SADC6bM7DHbhiLhjimmOzTWj2uU06MElsz06dnh00c2y0UIWC+pgRUv/YO89FkPEYcKAZWhS2cdFls24bFkLkswFz6oxVzCf30JxzBZpBUwkwsSe+cLhgNKYfvwndDlJaDYU35rZ2K+fUmzh9xgIzMOh8sQKZH9YlUsnLuEHRwV+z/aFvGi4s4cPlmXeMN4YE0IQyYRemk/OCuTD+e1OdHZPd9UTFD4Uy5OFnitZ0704eOCtLEVH+lgEWhn9e7DAGB6Xq+NVxEQviX087U80dSSKX7okiDeHB+WQ07GX/TKOKgVZ/Bl1mCKM4E9aE5y+K5F47+m7lzTUhEwRcF1InehuM4PG4D7a4XBicCXCsXUtJ3Xswd2aCG0"};
   const NTFY_TOPIC = 'meet-adi-r1eyi05frk2q52';
 
   const b64 = s => Uint8Array.from(atob(s), c => c.charCodeAt(0));
+  const norm = s => s.trim().toLowerCase().replace(/\s+/g, ' ');
 
   async function decrypt(password) {
     const enc = new TextEncoder();
@@ -205,29 +279,100 @@
       { name: 'PBKDF2', salt: b64(ENC.salt), iterations: 120000, hash: 'SHA-256' },
       baseKey, { name: 'AES-GCM', length: 256 }, false, ['decrypt']);
     const plain = await crypto.subtle.decrypt({ name: 'AES-GCM', iv: b64(ENC.iv) }, key, b64(ENC.data));
-    return new TextDecoder().decode(plain);
+    return JSON.parse(new TextDecoder().decode(plain));
   }
 
   function ping(message) {
     fetch('https://ntfy.sh/' + NTFY_TOPIC, { method: 'POST', body: message }).catch(() => {});
   }
 
-  (function floaties() {
-    const wrap = document.getElementById('floaties');
-    const props = ['✨', '🌸', '💫', '✨', '🌷', '✨'];
-    for (let i = 0; i < 14; i++) {
+  // ── floating props: hospital before, garden after ──────────────────
+  const floaties = document.getElementById('floaties');
+  function spawnFloaties(props, n) {
+    floaties.innerHTML = '';
+    for (let i = 0; i < n; i++) {
       const s = document.createElement('span');
       s.textContent = props[Math.floor(Math.random() * props.length)];
       s.style.left = Math.random() * 100 + 'vw';
-      s.style.fontSize = (0.8 + Math.random() * 1.1) + 'rem';
-      s.style.animationDuration = (14 + Math.random() * 12) + 's';
-      s.style.animationDelay = (Math.random() * 16) + 's';
+      s.style.fontSize = (0.9 + Math.random() * 1.2) + 'rem';
+      s.style.animationDuration = (13 + Math.random() * 12) + 's';
+      s.style.animationDelay = (Math.random() * 14) + 's';
       s.style.setProperty('--drift', (Math.random() * 90 - 45) + 'px');
       s.style.setProperty('--spin', (Math.random() * 50 - 25) + 'deg');
-      wrap.appendChild(s);
+      floaties.appendChild(s);
     }
-  })();
+  }
+  spawnFloaties(['💉', '💊', '🩺', '🩹', '📋', '💊', '✨'], 16);
 
+  // ── party popper sound (synthesised, no audio file) ────────────────
+  let audioCtx = null;
+  function armAudio() {
+    try {
+      audioCtx = audioCtx || new (window.AudioContext || window.webkitAudioContext)();
+      if (audioCtx.state === 'suspended') audioCtx.resume();
+    } catch (_) {}
+  }
+  function popSound(delay) {
+    if (!audioCtx) return;
+    const t = audioCtx.currentTime + delay;
+    const o = audioCtx.createOscillator(), g = audioCtx.createGain();
+    o.type = 'sine';
+    o.frequency.setValueAtTime(260, t);
+    o.frequency.exponentialRampToValueAtTime(55, t + 0.13);
+    g.gain.setValueAtTime(0.9, t);
+    g.gain.exponentialRampToValueAtTime(0.001, t + 0.2);
+    o.connect(g).connect(audioCtx.destination);
+    o.start(t); o.stop(t + 0.22);
+
+    const len = Math.floor(audioCtx.sampleRate * 0.4);
+    const buf = audioCtx.createBuffer(1, len, audioCtx.sampleRate);
+    const d = buf.getChannelData(0);
+    for (let i = 0; i < len; i++) d[i] = (Math.random() * 2 - 1) * Math.pow(1 - i / len, 2.4);
+    const n = audioCtx.createBufferSource(); n.buffer = buf;
+    const hp = audioCtx.createBiquadFilter(); hp.type = 'highpass'; hp.frequency.value = 1600;
+    const ng = audioCtx.createGain(); ng.gain.setValueAtTime(0.55, t);
+    n.connect(hp).connect(ng).connect(audioCtx.destination);
+    n.start(t + 0.015);
+  }
+
+  // ── party popper confetti: launched from the corners, arcs up, falls ─
+  function popper(ox, oy, dirX, count) {
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    const colors = ['#4fc3c3', '#2d8a8a', '#ffd166', '#ef6f6c', '#f7a072', '#c084fc', '#fb7185', '#34d399'];
+    const emojis = ['🎉', '🎊', '✨', '🌸', '⭐'];
+    const H = window.innerHeight, W = window.innerWidth;
+    for (let i = 0; i < count; i++) {
+      const p = document.createElement('span');
+      const isEmoji = Math.random() < 0.14;
+      p.className = 'pop' + (isEmoji ? ' emoji' : '');
+      if (isEmoji) p.textContent = emojis[Math.floor(Math.random() * emojis.length)];
+      else p.style.background = colors[Math.floor(Math.random() * colors.length)];
+      p.style.left = ox + 'px';
+      p.style.top = oy + 'px';
+      const spread = (Math.random() - 0.5) * 0.9;
+      const px = dirX * (W * (0.25 + Math.random() * 0.55)) + spread * W * 0.3;
+      const py = -(H * (0.35 + Math.random() * 0.55));
+      p.style.setProperty('--px', px + 'px');
+      p.style.setProperty('--py', py + 'px');
+      p.style.setProperty('--fx', (px + (Math.random() - 0.5) * 160) + 'px');
+      p.style.setProperty('--fy', (H * 0.4 + Math.random() * H * 0.5) + 'px');
+      p.style.setProperty('--r1', (Math.random() * 540 - 270) + 'deg');
+      p.style.setProperty('--r2', (Math.random() * 1080 - 540) + 'deg');
+      p.style.setProperty('--dur', (1.6 + Math.random() * 0.8) + 's');
+      p.style.animationDelay = (Math.random() * 0.18) + 's';
+      document.body.appendChild(p);
+      setTimeout(() => p.remove(), 2700);
+    }
+  }
+  function party() {
+    const H = window.innerHeight, W = window.innerWidth;
+    popper(0, H, 1, 90);
+    popper(W, H, -1, 90);
+    setTimeout(() => popper(W / 2, H * 0.55, 0, 70), 260);
+    popSound(0); popSound(0.22); popSound(0.48);
+  }
+
+  // ── unlock flow ────────────────────────────────────────────────────
   const form = document.getElementById('form');
   const input = document.getElementById('answer');
   const hint = document.getElementById('hint');
@@ -235,21 +380,22 @@
   const lockScreen = document.getElementById('lock');
   const reveal = document.getElementById('reveal');
   const hints = [
-    'nahi… phir se socho 🙈',
-    'hint: 5 letters, starts with A',
-    'it\'s you, silly 🙄',
+    'nahi… spelling check karo 🙈',
+    'hint: two words. the second one has an "h" you keep forgetting',
+    'c-i-r-c-a-d-i-a-n … r-h-y-t-h-m 🙄',
   ];
   let tries = 0;
 
   form.addEventListener('submit', async e => {
     e.preventDefault();
-    const guess = input.value.trim().toLowerCase();
+    armAudio();
+    const guess = norm(input.value);
     if (!guess) return;
     go.disabled = true;
     hint.textContent = '';
     try {
-      const text = await decrypt(guess);
-      unlock(text);
+      const secret = await decrypt(guess);
+      unlock(secret);
     } catch (_) {
       tries++;
       hint.textContent = hints[Math.min(tries - 1, hints.length - 1)];
@@ -259,21 +405,36 @@
     }
   });
 
-  function unlock(text) {
+  function unlock(s) {
     document.getElementById('lockIcon').textContent = '🔓';
     document.getElementById('lockIcon').classList.add('open');
-    ping('She unlocked the message 🔓');
+    ping('She unlocked the prescription 🔓');
+    party();
 
-    const msg = document.getElementById('msg');
-    const paras = text.split(/\n\s*\n/).map(p => p.trim()).filter(Boolean);
-    paras.forEach((p, i) => {
+    document.getElementById('rxNo').textContent = 'No. ' + (Math.floor(Math.random() * 9000) + 1000);
+    document.getElementById('rxPatient').textContent = s.patient;
+    document.getElementById('rxDate').textContent =
+      new Date().toLocaleDateString('en-IN', { day: 'numeric', month: 'short', year: 'numeric' });
+    document.getElementById('rxComplaint').textContent = s.complaint;
+    document.getElementById('rxDiag').textContent = s.diagnosis;
+    document.getElementById('rxSign').textContent = s.sign;
+
+    const msg = document.getElementById('rxMsg');
+    s.message.split(/\n\s*\n/).map(p => p.trim()).filter(Boolean).forEach((p, i) => {
       const el = document.createElement('p');
       el.className = 'line';
       el.textContent = p;
-      el.style.animationDelay = (0.55 + i * 0.42) + 's';
+      el.style.animationDelay = (0.9 + i * 0.45) + 's';
       msg.appendChild(el);
     });
-    document.getElementById('sign').style.animationDelay = (0.7 + paras.length * 0.42) + 's';
+    const list = document.getElementById('rxList');
+    s.prescribed.forEach((item, i) => {
+      const li = document.createElement('li');
+      li.textContent = item;
+      li.style.animationDelay = (1.9 + i * 0.35) + 's';
+      list.appendChild(li);
+    });
+    document.getElementById('rxStamp').style.animationDelay = (2.2 + s.prescribed.length * 0.35) + 's';
 
     setTimeout(() => {
       lockScreen.classList.add('leaving');
@@ -281,8 +442,9 @@
         lockScreen.classList.add('hidden');
         reveal.classList.remove('hidden');
         reveal.classList.add('entering');
+        spawnFloaties(['🌸', '🌺', '🌷', '🌼', '🌻', '✨', '🌸'], 22);
       }, 520);
-    }, 650);
+    }, 900);
   }
 
   input.focus();
