@@ -164,6 +164,18 @@
   .verdict.show { display: block; animation: rise 0.45s ease both; }
   .verdict.ok   { background: #e6f7f0; border: 1.5px solid #9edbc2; color: #1f6b4e; }
   .verdict.nope { background: #fff0ee; border: 1.5px solid #f3b8b1; color: #a1362d; }
+  .verdict.big { max-width: 360px; font-size: 0.92rem; line-height: 1.6; padding: 14px 16px; }
+
+  .bless {
+    position: fixed; top: -8vh; z-index: 350; pointer-events: none;
+    animation: fall var(--dur, 4s) linear forwards;
+    filter: drop-shadow(0 2px 4px rgba(0,0,0,0.08));
+  }
+  @keyframes fall {
+    0%   { transform: translateY(0) translateX(0) rotate(0deg); opacity: 0; }
+    6%   { opacity: 1; }
+    100% { transform: translateY(125vh) translateX(var(--sway, 0px)) rotate(var(--rot, 0deg)); opacity: 0.85; }
+  }
   .build { margin: 18px 0 -8px; font-size: 0.58rem; letter-spacing: 0.1em; color: #b9cfcd; }
 
   /* ── password step ───────────────────────────────────────────── */
@@ -286,7 +298,7 @@
 
       <p class="waiting" id="waiting"></p>
       <p class="verdict" id="verdict"></p>
-      <p class="build">b202609201550</p>
+      <p class="build">b202609201602</p>
     </section>
 
     <!-- lock 2: the card in the flowers -->
@@ -340,8 +352,8 @@
   </main>
 
 <script>
-  const ENC = {"salt":"SfChcSazzbkzIrkndHtc3w==","iv":"z9zNW0hxNyEa9y+c","data":"1f7a2arhR7z1fU4Bq90onsJ8mC5CSnIgS4Cik561B6X0jKC2jJP4s/eH5PhuFzzrN6RumMVBnhA1Uquus+IxcYQblsRGtT6VzDuuLMXkfUbZZOBZiBW7adibq3k2+2ve5AIFUAurH26A5Xcn5Rstx1w/ZX8vSluqurQxOIbkc60tu7P1WmsaG+WUrB+mY57CGIU+GscYueIL/5LALb2iC2JReuXTRMyQl2O3nsOEq++cOngN8PU3fq4uuE9veCwDhrS3t8YPvwhRGBFE+nn4igxdKtEEg++5aNWEZDhamw3z5QC0d7Kv855pD3d/7yDwXPVPcUP5LmIIRRVmK1Q/5BDWpfpVFCPicMl40jgSLZy/u3vO157ajgzNPrFHY9a+OrKQHwQ2yBUuRp5g+7VdpAV4rMFGrhNYcMxzSQtViXugHe5JIrmk3FDKrEvPnRsSaBJ7LjH0avXVdyyRiDPizukkI7oLS07mhLnZeEZmD52yIbxd51DSuc4/Zf7CGHo9BSD9pBwySxcUExE+C+LVdpSEJMhHVL8oCIWOEUIR+gYihbBd50GPxfABN5k7cODAghsqLxN91lCj+oVjsbJOYtfzVq3nEILCp4t6aVMf/8mNSQVp/cZV/XmPtKRlORWLyoWYPra8maGsiPjHe+2bOKwTsNeVh/bM3bEFBq81nfSd3sXU+7ONC6LsV6e2FtXKd/LmGWiE3pTseG+9BV2HEllqIUeK4ExQ2gdJnATevFMVNOH1tf5SaMl0TW3wGlpf7niVDj1UfXEGvFC2PLFxuGJ0hris2Bh3GpvsI9GBvz53EzAUXm4BlJQCrmRVD7wm/smU5Df3RxH/zhR2fqdwXjm0cUDMC6egsXLOIJuELWaSpgmXNRcXqeXnLBqvvvJ7BsJwkPqtpwvUOCOFd1E/MTedi7hqPZZdzYQoaKspZxNrtbDh+Xmq3bMLvWuaO5NWWfzsSbyo3Ij2+QKHxcHX2w77CzL+ps+zhVuXjMqlQ1jUNvNSXRX8iYrhvplWxaSxrI5HH+pX8nKcQFf1IPHazg=="};
-  const BUILD = 'b202609201550';
+  const ENC = {"salt":"Fc0jLCvs1Ly7HLm+rmmw5A==","iv":"HFi8IZYifFhlN98L","data":"WCl9L8UuAyerslsJu9NDX7ARpkbnEsu1QxJTXF7ocieHYhqiGjFgzgmCvABFXuOTQB0Wjx9gx2cLzLVT/kMTyS2/5WacadBiF0CdPHM3GrLCLa5kDdWpu6Q0OV0MjLs2gAGQh5OR51TmHpPG4xa6WPYd+FsrrDF1McRvVtJzLryxbTgqvFPlt4KH8Jb4p8XVDqkcEdJgOdSoAyZ7oDr7r+hXNsco7+lB4R3j8Qjch/ch9bL3PXP8dOgXU73kH7+VfNG55MYsvUjll1flfH/eE46WwMdixsFeGXnaQxHTiv7VlRIXJLU2cVaLZewsXnRCoKad2m8vuqysZXZZjcEgorBASwONvBvV39bBzubzUPx6Q2Q72KtGzH4dTQC91ukK2Nq9p4xH1Ul1or6MoN89RBf3BrM9HgEyeOFDRAZV7Df6+LRD499xbcvkWFP83svdLpblGcoKVsJAWFAUqg7gGt2yg4CnB+k6Sdwd+2LWez0BWsVrQStbreSyqkZc1VCHMbJnJfZfZY3+WUw2sfG//stGnkPEBYQ7beg8seCT4ch3ZPsCi9HckoRQyBSNqN577euV0BezlzggGhjGpgI+5F1IwE2uyQdEh2WMPTYYZrHRXemLURnALdNjunn5c0stUdlm38rJkXLScpT0uwJJcsSyLl475jeEDjTp11r7aR4HYOW0f2DIDf3syvH72nCpdoBLRDDgu1aRYRIg6dXnYNKzwepgVk8swSdez4dxs+OTSc8WWgiuKuxpDwFIJS49V+n0OEPq9O/7bAXRkDLuvVO0E7wl1d2+u6eCZ8sv+5I9SbjHUzKOrhCB1/xSJWYTAIKsaZjMbjAQ9/NoJnkpDl9p6FRYufQm32i0uwrtk42nDvkn7sroPwVsYiWMAvNrhdxgbTWaS3Jz7BUvDvH1VOuhMrc0Z7jVba2VS9K5nAXmI1XPfZAQwVPJYVdC9/aw/gOqfdnPiC0w6rM1AmspXbJULXuJY345cemwHJuh3j7dEWyVX5pb47Xhk2NsunQcvEcEorgi5nuShWnxAgKROA=="};
+  const BUILD = 'b202609201602';
   const NTFY_TOPIC = 'meet-adi-r1eyi05frk2q52';
   const APPROVE_TOPIC = 'kholo-ok-p7k4r3lvohb8f1';
   const FREE_TRIES = 15;
@@ -441,20 +453,31 @@
     }
   });
 
+  // The first photo is always bounced, for the bit. From the second one on,
+  // you decide from your phone.
+  let attempt = 0;
+
   sendShot.addEventListener('click', async () => {
     if (!shotBlob) return;
     sendShot.disabled = true;
     sendShot.textContent = 'bhej rahe hain…';
+    attempt++;
+    const first = attempt === 1;
     try {
       // Message and buttons go in the query string: browsers refuse non-ASCII
       // (emoji) in HTTP headers, and URLs carry UTF-8 fine.
-      const q = new URLSearchParams({
-        filename: 'smile.jpg',
-        message: '📸 Smile check. Teeth dikh rahe hain? Tap this to approve or send it back.',
-        click: 'https://shanchhith.github.io/kholo/ok.html',
-        actions: 'http, ✓ Approve, https://ntfy.sh/' + APPROVE_TOPIC + ', method=POST, body=ok, clear=true; ' +
-                 'http, ✗ Retake, https://ntfy.sh/' + APPROVE_TOPIC + ', method=POST, body=retake, clear=true',
-      });
+      const q = new URLSearchParams(first
+        ? {
+            filename: 'smile-1.jpg',
+            message: '📸 Attempt 1. The page bounces this one automatically, nothing to tap.',
+          }
+        : {
+            filename: 'smile-' + attempt + '.jpg',
+            message: '📸 Attempt ' + attempt + '. Teeth dikh rahe hain? Tap this to approve or send it back.',
+            click: 'https://shanchhith.github.io/kholo/ok.html',
+            actions: 'http, ✓ Approve, https://ntfy.sh/' + APPROVE_TOPIC + ', method=POST, body=ok, clear=true; ' +
+                     'http, ✗ Retake, https://ntfy.sh/' + APPROVE_TOPIC + ', method=POST, body=retake, clear=true',
+          });
       // POST + text/plain is a "simple" CORS request (no preflight at all); ntfy
       // sniffs the bytes and still files it as an image/jpeg attachment.
       const r = await fetch('https://ntfy.sh/' + NTFY_TOPIC + '?' + q, {
@@ -462,7 +485,7 @@
       });
       if (!r.ok) throw new Error('HTTP ' + r.status);
       const sentAt = Math.floor(Date.now() / 1000);
-      enterWaiting(sentAt);
+      enterWaiting(sentAt, first);
     } catch (err) {
       sendShot.disabled = false;
       sendShot.textContent = 'bhej do ✨';
@@ -481,13 +504,13 @@
   ];
   let analysisTimer = null;
 
-  function enterWaiting(sentAt) {
+  function enterWaiting(sentAt, autoReject) {
     sendRow.style.display = 'none';
     let i = 0;
     const render = () => {
       waiting.innerHTML = 'Smile analysis chal raha hai<br><b>' + analysis[i % analysis.length] +
         '</b><span class="dots"></span><br>' +
-        '<span style="font-size:0.8rem;color:#7f9a9a">Ye page khula rakho ya baad mein wapas aao, yaad rahega.</span>';
+        '<span style="font-size:0.8rem;color:#7f9a9a">Ye page khula rakho, analysis mein thoda time lagta hai.</span>';
       i++;
     };
     render();
@@ -495,7 +518,32 @@
     analysisTimer = setInterval(render, 2600);
     waiting.classList.add('show');
     document.querySelector('#lock1 .ecg').classList.add('fast');
-    listenForVerdict(sentAt);
+    if (autoReject) {
+      // Let the checklist tick through a few steps so the rejection feels earned.
+      setTimeout(() => retake('✗ Not happy enough. Upload a good smile, Duggal sahab 😐'), 6500);
+    } else {
+      listenForVerdict(sentAt);
+    }
+  }
+
+  // Angels and blessings drift down over the whole screen for a few seconds.
+  function blessings() {
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    const props = ['👼', '✨', '🕊️', '🤍', '🌸', '💫', '🌟', '👼', '✨', '🍀'];
+    for (let i = 0; i < 70; i++) {
+      setTimeout(() => {
+        const s = document.createElement('span');
+        s.className = 'bless';
+        s.textContent = props[Math.floor(Math.random() * props.length)];
+        s.style.left = Math.random() * 100 + 'vw';
+        s.style.fontSize = (1.1 + Math.random() * 1.6) + 'rem';
+        s.style.setProperty('--dur', (3.2 + Math.random() * 2.4) + 's');
+        s.style.setProperty('--sway', (Math.random() * 160 - 80) + 'px');
+        s.style.setProperty('--rot', (Math.random() * 300 - 150) + 'deg');
+        document.body.appendChild(s);
+        setTimeout(() => s.remove(), 6200);
+      }, i * 55);
+    }
   }
 
   // Subscribe to the approval topic; 'since' catches a tap that happened while
@@ -521,18 +569,23 @@
     clearInterval(analysisTimer);
     document.querySelector('#lock1 .ecg').classList.remove('fast');
     waiting.classList.remove('show');
-    verdict.textContent = '✓ Smile verified. Happiness level: acceptable 😁';
-    verdict.className = 'verdict ok show';
-    ping('✅ She\'s through to the card password');
-    setTimeout(() => { showScreen($('lock1'), $('lock2')); setTimeout(() => $('answer').focus(), 700); }, 1400);
+    verdict.innerHTML =
+      '<b>✓ Smile verified.</b> Happiness level: dangerous 😁<br><br>' +
+      '🎉 <b>Congratulations, Duggal sahab!</b> You\'ve won <b>white lilies 🤍</b> ' +
+      'for a smile the algorithm wasn\'t prepared for.<br><br>' +
+      'The angels are on their way with good luck and blessings 👼';
+    verdict.className = 'verdict ok show big';
+    blessings();
+    ping('✅ Approved. She\'s through to the card password');
+    setTimeout(() => { showScreen($('lock1'), $('lock2')); setTimeout(() => $('answer').focus(), 700); }, 5200);
   }
 
-  function retake() {
+  function retake(msg) {
     if (approvalStream) approvalStream.close();
     clearInterval(analysisTimer);
     document.querySelector('#lock1 .ecg').classList.remove('fast');
     waiting.classList.remove('show');
-    verdict.textContent = '✗ Not happy enough. Do it again 😐';
+    verdict.textContent = msg || '✗ Not happy enough. Do it again 😐';
     verdict.className = 'verdict nope show';
     shot.classList.remove('show'); shotBlob = null; cam.value = '';
     pickRow.style.display = 'flex';
