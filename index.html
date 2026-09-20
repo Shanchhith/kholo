@@ -40,8 +40,6 @@
     100% { transform: translateY(-118vh) translateX(var(--drift, 30px)) rotate(var(--spin, 18deg)); opacity: 0; }
   }
 
-  /* Fixed height + auto margins on the card: centred when it fits, scrolls
-     from the top when it doesn't (align-items:center would clip the top). */
   .stage {
     position: relative; z-index: 2;
     height: 100vh; height: 100dvh;
@@ -63,7 +61,7 @@
     -webkit-backdrop-filter: blur(18px);
     border: 1px solid rgba(255,255,255,0.8);
     border-radius: 30px;
-    padding: 36px 26px 30px;
+    padding: 34px 26px 30px;
     text-align: center;
     box-shadow: 0 30px 70px rgba(45,90,90,0.14);
     transition: opacity 0.6s ease, transform 0.6s cubic-bezier(.34,1.3,.64,1);
@@ -89,7 +87,7 @@
   }
 
   .eyebrow {
-    margin: 14px 0 18px;
+    margin: 12px 0 16px;
     font-size: 0.68rem; letter-spacing: 0.2em; text-transform: uppercase;
     color: #8bb3b3; font-weight: 600;
   }
@@ -102,8 +100,8 @@
     animation: trace 2.8s linear infinite;
   }
   @keyframes trace { from { stroke-dashoffset: 600; } to { stroke-dashoffset: 0; } }
+  .ecg.fast polyline { animation-duration: 1.1s; }
 
-  .riddle { margin: 0 0 26px; }
   .line {
     margin: 0 0 7px; font-size: 1.02rem; line-height: 1.55; color: #3a4a4a;
     opacity: 0; animation: rise 0.75s cubic-bezier(.2,.7,.3,1) both;
@@ -112,44 +110,71 @@
     font-family: 'Dancing Script', cursive;
     font-size: 1.55rem; line-height: 1.3; color: #2d8a8a; margin: 0 0 2px;
   }
-  .line.sher + .line:not(.sher) { margin-top: 18px; }
-  .riddle .line:last-child { font-size: 0.82rem; color: #7f9a9a; margin-top: 6px; }
-
-  .meter {
-    display: none;
-    margin: 14px auto 0; max-width: 340px;
-    background: #fff4d6; border: 1.5px solid #f0d089; border-radius: 14px;
-    padding: 10px 14px;
-    font-size: 0.8rem; line-height: 1.5; color: #7a5b16;
-    animation: rise 0.5s ease both;
+  .riddle { margin: 0 0 22px; }
+  .step-title {
+    font-family: 'Dancing Script', cursive;
+    font-size: 1.75rem; color: #2d8a8a; margin: 16px 0 6px; line-height: 1.2;
   }
-  .meter.show { display: block; }
-  .meter b { color: #9a6b0a; font-variant-numeric: tabular-nums; }
+  .step-text { font-size: 0.92rem; line-height: 1.55; color: #55706d; margin: 0 0 20px; }
   @keyframes rise {
     from { opacity: 0; transform: translateY(14px); filter: blur(4px); }
     to   { opacity: 1; transform: translateY(0); filter: blur(0); }
   }
 
-  form { display: flex; flex-direction: column; gap: 14px; align-items: center; }
-  input {
-    width: 100%; font: inherit; font-size: 1.25rem; text-align: center;
-    color: #2d8a8a; letter-spacing: 0.05em;
-    background: transparent; border: none; border-bottom: 2px solid #cfe4e2;
-    padding: 10px 4px; outline: none;
-    transition: border-color 0.25s ease;
+  /* ── selfie step ─────────────────────────────────────────────── */
+  .shot { display: none; margin: 0 auto 14px; width: 190px; height: 190px; }
+  .shot.show { display: block; animation: rise 0.5s ease both; }
+  .shot img {
+    width: 100%; height: 100%; object-fit: cover; display: block;
+    border-radius: 50%; border: 5px solid #fff;
+    box-shadow: 0 12px 30px rgba(45,90,90,0.22);
   }
-  input::placeholder { color: #b7cfcd; letter-spacing: 0.02em; font-size: 1rem; }
-  input:focus { border-bottom-color: #2d8a8a; }
+  .row { display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; }
   .btn {
-    border: none; border-radius: 999px; padding: 14px 40px;
+    border: none; border-radius: 999px; padding: 14px 32px;
     font: inherit; font-size: 1rem; font-weight: 600; color: #fff;
     background: linear-gradient(135deg, #4fc3c3, #2d8a8a);
     box-shadow: 0 10px 24px rgba(45,138,138,0.28);
-    cursor: pointer; transition: transform 0.15s ease;
+    cursor: pointer; transition: transform 0.15s ease, opacity 0.2s ease;
+    display: inline-block; text-decoration: none;
   }
   .btn:active { transform: scale(0.96); }
-  .btn[disabled] { opacity: 0.6; }
+  .btn[disabled] { opacity: 0.55; pointer-events: none; }
+  .btn.ghost {
+    background: rgba(255,255,255,0.85); color: #2d8a8a;
+    border: 1.5px solid #cfe4e2; box-shadow: none;
+  }
+  input[type=file] { display: none; }
 
+  .waiting {
+    display: none; margin: 18px 0 0;
+    font-size: 0.92rem; color: #55706d; line-height: 1.6;
+  }
+  .waiting.show { display: block; animation: rise 0.5s ease both; }
+  .waiting b { color: #2d8a8a; }
+  .dots::after {
+    content: ''; display: inline-block; width: 1.2em; text-align: left;
+    animation: dots 1.4s steps(4, end) infinite;
+  }
+  @keyframes dots { 0% { content: ''; } 25% { content: '.'; } 50% { content: '..'; } 75% { content: '...'; } }
+  .verdict {
+    display: none; margin: 14px auto 0; max-width: 330px;
+    border-radius: 14px; padding: 11px 14px; font-size: 0.88rem; line-height: 1.5;
+  }
+  .verdict.show { display: block; animation: rise 0.45s ease both; }
+  .verdict.ok   { background: #e6f7f0; border: 1.5px solid #9edbc2; color: #1f6b4e; }
+  .verdict.nope { background: #fff0ee; border: 1.5px solid #f3b8b1; color: #a1362d; }
+
+  /* ── password step ───────────────────────────────────────────── */
+  form.pw { display: flex; flex-direction: column; gap: 14px; align-items: center; }
+  form.pw input {
+    width: 100%; font: inherit; font-size: 1.25rem; text-align: center;
+    color: #2d8a8a; letter-spacing: 0.05em;
+    background: transparent; border: none; border-bottom: 2px solid #cfe4e2;
+    padding: 10px 4px; outline: none; transition: border-color 0.25s ease;
+  }
+  form.pw input::placeholder { color: #b7cfcd; letter-spacing: 0.02em; font-size: 1rem; }
+  form.pw input:focus { border-bottom-color: #2d8a8a; }
   .hint { min-height: 1.4em; margin: 12px 0 0; font-size: 0.86rem; color: #c25b52; }
   form.shake { animation: shake 0.45s ease; }
   @keyframes shake {
@@ -158,62 +183,47 @@
     30%, 50%, 70% { transform: translateX(-7px); }
     40%, 60% { transform: translateX(7px); }
   }
+  .meter {
+    display: none; margin: 14px auto 0; max-width: 340px;
+    background: #fff4d6; border: 1.5px solid #f0d089; border-radius: 14px;
+    padding: 10px 14px; font-size: 0.8rem; line-height: 1.5; color: #7a5b16;
+    animation: rise 0.5s ease both;
+  }
+  .meter.show { display: block; }
+  .meter b { color: #9a6b0a; font-variant-numeric: tabular-nums; }
 
-  /* ── prescription ─────────────────────────────────────────────── */
+  /* ── prescription ────────────────────────────────────────────── */
   #reveal { padding: 22px 18px 24px; }
   .rx {
-    background: #fffdf7;
-    border: 1px solid #e2dac5;
-    border-radius: 8px;
-    box-shadow: 0 10px 26px rgba(0,0,0,0.10);
-    text-align: left;
+    background: #fffdf7; border: 1px solid #e2dac5; border-radius: 8px;
+    box-shadow: 0 10px 26px rgba(0,0,0,0.10); text-align: left;
     font-family: 'Courier Prime', ui-monospace, 'Courier New', monospace;
-    color: #3a3a34;
-    overflow: hidden;
+    color: #3a3a34; overflow: hidden;
     opacity: 0; animation: rise 0.9s ease 0.3s both;
   }
-  .rx-top {
-    text-align: center; padding: 14px 14px 10px;
-    border-bottom: 2px solid #2d8a8a;
-  }
-  .rx-hosp {
-    font-weight: 700; font-size: 0.82rem; letter-spacing: 0.12em;
-    text-transform: uppercase; color: #2d8a8a;
-  }
+  .rx-top { text-align: center; padding: 14px 14px 10px; border-bottom: 2px solid #2d8a8a; }
+  .rx-hosp { font-weight: 700; font-size: 0.82rem; letter-spacing: 0.12em; text-transform: uppercase; color: #2d8a8a; }
   .rx-dept { font-size: 0.7rem; color: #8a8578; letter-spacing: 0.08em; margin-top: 3px; }
-  .rx-head {
-    display: flex; align-items: baseline; gap: 10px;
-    background: #2d8a8a; color: #fff; padding: 9px 14px;
-  }
+  .rx-head { display: flex; align-items: baseline; gap: 10px; background: #2d8a8a; color: #fff; padding: 9px 14px; }
   .rx-symbol { font-size: 1.4rem; font-weight: 700; line-height: 1; }
   .rx-title { flex: 1; text-transform: uppercase; letter-spacing: 0.14em; font-size: 0.72rem; }
   .rx-no { font-size: 0.7rem; opacity: 0.85; }
   .rx-body { padding: 14px; display: flex; flex-direction: column; gap: 9px; }
   .rx-line { display: flex; gap: 10px; align-items: baseline; font-size: 0.84rem; }
-  .rx-label {
-    flex: 0 0 78px; text-transform: uppercase; font-size: 0.6rem;
-    letter-spacing: 0.1em; color: #9a9486;
-  }
+  .rx-label { flex: 0 0 78px; text-transform: uppercase; font-size: 0.6rem; letter-spacing: 0.1em; color: #9a9486; }
   .rx-value { flex: 1; word-break: break-word; }
   .rx-rule { border-top: 1px dashed #ded6c0; margin: 3px 0; }
   .rx-msg { display: flex; flex-direction: column; gap: 10px; padding: 4px 0; }
   .rx-msg .line { font-size: 0.95rem; line-height: 1.65; color: #33443f; margin: 0; }
-  .rx-msg .line:first-child {
-    font-family: 'Dancing Script', cursive;
-    font-size: 1.85rem; color: #2d8a8a; text-align: center; line-height: 1.2;
-  }
+  .rx-msg .line:first-child { font-family: 'Dancing Script', cursive; font-size: 1.85rem; color: #2d8a8a; text-align: center; line-height: 1.2; }
   .rx-presc { display: flex; flex-direction: column; gap: 5px; }
   .rx-presc .rx-label { flex: none; }
   .rx-presc ul { margin: 2px 0 0; padding-left: 18px; }
   .rx-presc li { font-size: 0.84rem; line-height: 1.55; margin: 0 0 4px; opacity: 0; animation: rise 0.6s ease both; }
-  .rx-foot {
-    display: flex; align-items: center; justify-content: space-between; gap: 12px;
-    padding: 12px 14px 16px; border-top: 1px dashed #ded6c0;
-  }
+  .rx-foot { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 12px 14px 16px; border-top: 1px dashed #ded6c0; }
   .rx-stamp {
-    border: 2px solid #c25b52; color: #c25b52;
-    font-size: 0.64rem; letter-spacing: 0.18em; padding: 4px 9px;
-    border-radius: 4px; font-weight: 700; transform: rotate(-7deg);
+    border: 2px solid #c25b52; color: #c25b52; font-size: 0.64rem; letter-spacing: 0.18em;
+    padding: 4px 9px; border-radius: 4px; font-weight: 700; transform: rotate(-7deg);
     opacity: 0; animation: stamp 0.5s cubic-bezier(.34,1.56,.64,1) both;
   }
   @keyframes stamp {
@@ -222,40 +232,7 @@
   }
   .rx-sign { font-family: 'Dancing Script', cursive; font-size: 1.5rem; color: #2f4f8a; line-height: 1; }
 
-  /* ── flowers ──────────────────────────────────────────────────── */
-  .flowers {
-    margin-top: 22px; padding-top: 20px;
-    border-top: 1px dashed #cfe4e2;
-    opacity: 0; animation: rise 0.8s ease both;
-  }
-  .flowers-title {
-    font-family: 'Dancing Script', cursive;
-    font-size: 1.7rem; color: #2d8a8a; margin: 0 0 6px;
-  }
-  .flowers-text {
-    font-size: 0.86rem; line-height: 1.55; color: #55706d;
-    margin: 0 0 14px; text-align: center;
-  }
-  .flowers form { display: flex; flex-direction: column; gap: 10px; }
-  .field {
-    width: 100%; font: inherit; font-size: 0.98rem; color: #2a3a3a;
-    background: rgba(255,255,255,0.85);
-    border: 1.5px solid #d9ece9; border-radius: 14px;
-    padding: 12px 14px; outline: none; text-align: left;
-    letter-spacing: 0; resize: vertical;
-    transition: border-color 0.2s ease, box-shadow 0.2s ease;
-  }
-  .field::placeholder { color: #a9c3c1; font-size: 0.92rem; }
-  .field:focus { border-color: #2d8a8a; box-shadow: 0 0 0 3px rgba(45,138,138,0.14); }
-  .flowers .btn { width: 100%; margin-top: 4px; }
-  .flowers-done {
-    display: none; margin: 12px 0 0;
-    font-size: 0.9rem; color: #2d8a8a; font-weight: 500; text-align: center;
-  }
-  .flowers-done.show { display: block; animation: rise 0.5s ease both; }
-  .flowers-done.err { color: #c25b52; }
-
-  /* ── party popper ─────────────────────────────────────────────── */
+  /* ── party popper ────────────────────────────────────────────── */
   .pop {
     position: fixed; z-index: 400; pointer-events: none;
     width: 10px; height: 16px; border-radius: 2px;
@@ -269,8 +246,8 @@
   }
 
   @media (prefers-reduced-motion: reduce) {
-    .blob, .floaties, .lockicon { animation: none; }
-    .line, .rx, .rx-presc li, .rx-stamp { animation-duration: 0.01s; }
+    .blob, .floaties, .lockicon, .dots::after { animation: none; }
+    .line, .rx, .rx-presc li, .rx-stamp, .shot, .waiting, .verdict { animation-duration: 0.01s; }
   }
 </style>
 </head>
@@ -280,28 +257,54 @@
   <div class="floaties" id="floaties" aria-hidden="true"></div>
 
   <main class="stage">
-    <section class="screen" id="lock">
+
+    <!-- lock 1: the smile -->
+    <section class="screen" id="lock1">
+      <svg class="ecg" viewBox="0 0 300 40" preserveAspectRatio="none" aria-hidden="true">
+        <polyline points="0,20 38,20 46,20 52,7 60,33 68,20 96,20 128,20 136,20 142,13 148,27 154,20 200,20 232,20 240,20 246,7 254,33 262,20 300,20"/>
+      </svg>
+      <div class="lockicon">🔒</div>
+      <p class="eyebrow">taala 1 of 2</p>
+      <div class="riddle">
+        <p class="line sher" style="animation-delay:0.35s">Raat bhar ka hai mehmaan andhera,</p>
+        <p class="line sher" style="animation-delay:0.6699999999999999s">kis ke roke ruka hai savera.</p>
+      </div>
+      <p class="step-title">Pehla taala: ek asli smile 😁</p>
+      <p class="step-text">Take a selfie. Teeth dikhne chahiye.<br>Shanchhith khud check karega.</p>
+
+      <div class="shot" id="shot"><img id="shotImg" alt="your smile"></div>
+
+      <div class="row" id="pickRow">
+        <label class="btn" for="cam">📸 smile karo</label>
+        <input id="cam" type="file" accept="image/*" capture="user">
+      </div>
+      <div class="row" id="sendRow" style="display:none">
+        <label class="btn ghost" for="cam">phir se 🔄</label>
+        <button class="btn" id="sendShot" type="button">bhej do ✨</button>
+      </div>
+
+      <p class="waiting" id="waiting"></p>
+      <p class="verdict" id="verdict"></p>
+    </section>
+
+    <!-- lock 2: the card in the flowers -->
+    <section class="screen hidden" id="lock2">
       <svg class="ecg" viewBox="0 0 300 40" preserveAspectRatio="none" aria-hidden="true">
         <polyline points="0,20 38,20 46,20 52,7 60,33 68,20 96,20 128,20 136,20 142,13 148,27 154,20 200,20 232,20 240,20 246,7 254,33 262,20 300,20"/>
       </svg>
       <div class="lockicon" id="lockIcon">🔒</div>
-      <p class="eyebrow">password protected</p>
-      <div class="riddle">
-        <p class="line sher" style="animation-delay:0.35s">Raat bhar ka hai mehmaan andhera,</p>
-        <p class="line sher" style="animation-delay:0.6699999999999999s">kis ke roke ruka hai savera.</p>
-        <p class="line" style="animation-delay:0.99s">I turn once a day inside you,</p>
-        <p class="line" style="animation-delay:1.31s">kept by a tiny clock behind your eyes,</p>
-        <p class="line" style="animation-delay:1.63s">and broken by every night you stayed awake.</p>
-        <p class="line" style="animation-delay:1.9500000000000002s">(Two words. Thodi galat spelling chalegi.)</p>
-      </div>
-      <form id="form" autocomplete="off">
-        <input id="answer" type="text" placeholder="type your answer" autocapitalize="off" autocorrect="off" spellcheck="false" inputmode="text">
+      <p class="eyebrow">taala 2 of 2</p>
+      <p class="step-title">Doosra taala: phoolon mein 🌷</p>
+      <p class="step-text">The password is on the card in your flowers.<br>Thodi galat spelling chalegi.</p>
+      <form id="form" class="pw" autocomplete="off">
+        <input id="answer" type="text" placeholder="card pe kya likha hai?" autocapitalize="off" autocorrect="off" spellcheck="false">
         <button class="btn" id="go" type="submit">kholo ✨</button>
       </form>
       <p class="hint" id="hint"></p>
       <p class="meter" id="meter"></p>
     </section>
 
+    <!-- the prescription -->
     <section class="screen hidden" id="reveal">
       <svg class="ecg" viewBox="0 0 300 40" preserveAspectRatio="none" aria-hidden="true">
         <polyline points="0,20 38,20 46,20 52,7 60,33 68,20 96,20 128,20 136,20 142,13 148,27 154,20 200,20 232,20 240,20 246,7 254,33 262,20 300,20"/>
@@ -331,27 +334,16 @@
           <span class="rx-sign" id="rxSign"></span>
         </div>
       </div>
-
-      <div class="flowers" id="flowers">
-        <p class="flowers-title">Ek aur cheez 🌸</p>
-        <p class="flowers-text">
-          This manifestation requires some flowers. Please add your address
-          and a time you'd be at the hostel. This goes straight to Shanchhith's phone, nowhere else.
-        </p>
-        <form id="flowersForm" autocomplete="off">
-          <textarea id="addr" class="field" rows="3" placeholder="hostel address 📍" required></textarea>
-          <input id="when" class="field" type="text" placeholder="when you'd be there, e.g. Tuesday after 6pm 🕐" required>
-          <button class="btn" id="flowersGo" type="submit">bhej do 🌷</button>
-        </form>
-        <p class="flowers-done" id="flowersDone"></p>
-      </div>
     </section>
   </main>
 
 <script>
-  const ENC = {"salt":"dY4j0YO5iIcAl1Hghs28Fw==","iv":"ShV53DzorlzcFGSI","data":"I4lq5Wb8juMBW/k9dHQcwoSi79YF6dZhwzz8bBwzY65vMWd36fWz1F+WdJ+ILKITbbzV5QtYJR3Wl0hr7rG+2jGzoujKq3O3pvT/f/9pQki9WYZa0YG50VOjCNtM8tyZLYivPxHmPW80ZE4YXI7CWl6n83wp4SWgpDtoKtndhMkTJnautR+VF5jciZi361fnhzbrtazrEq47nQoJVrVWovg1dTsXAIpmXSTM76/NMMDu/jbGS6w2p7lQ5Gq8FqC9gjMYK3MHk9AVKJXc9fvGLuji7UqvnMU4MCbURmuo03RaA6FMZDrfvph72eFM5OZjnnvPr37/WQiRtM5Tm39OtQQLrSQRRz8LuEUBdrgqOPQB0RCm7q4GPmBQ+DGM0Xvxu9o55/4/yCXLxz4ivkumAqzDc/CWQIS0+OG5fLmE9TePimaTUlzVC7/4xD7olUDvmuiZT/VbQY3XG2EEil99w+2BPvrLppRRgQkBnuqmA9KwIXJbZMqSMRGKcYjUFfYsjWhjFp/A6KnYXqk4kSnflq55VcEjCkPixTGLWvOoLJGTGls8xVvNNxTc5CkfXtUU7S1Xv4XXg6Eq5qmYZmX10xAkTd1llIRkZHstCtxPH+Obw56Tl+oFFvtswXPpOFjAAaFIiSp5l3Yb1O/PL37CU0Zn1w5w4CC8OEPGuNi4fkk/N5LkCT40onW1fEPHjwZD9fCrS16hd7jUEWor+9g+tnoN/+yhmcY5Tw07eyydU96RXoe3vek2mMmpKX8nc8QM/8gcg8VL/b+JzqAgcR360xMuy25azMgVN+mdnwYJOCfO2uzHhmqlD0630rvsrsb/0qExmaorYgUmnhgSHnxwr00v1seLavg0l8eT1dFeejJ+FE8X5OSdfBLemvqbsv8+DiwQjSpoayQjaY2rJmFeBVa3q1rTAkjmYha/OXja8hAYHZaEZQNh7iKJDx++DDDROZxiBhro3H9S1kj7O09rQTPeql69XTGa5WUKamaUCnYZD6U+VB4UxJBn0cdxAzeo3vHh87+ugXnjavLkBB+N0yGrgCo="};
+  const ENC = {"salt":"ZlrXTtafKOx7Wi7ZqOJ52A==","iv":"/Dr67nGWaTYuznai","data":"FNsdrlJL4ekM76e3GuqsSKONztY9pLP+AviBJGPX94dl/Kj9qGbj0booQbu5fiVOrPnuHXoZAB/SWL2P5dGtclFtBrx3gLtHwHsL0FMvaAtgCGDYAw5YoN+279goSC9hbDwoVT4mdkbwwD6SYYPG9rmSLgy39/UpMneCHyOrhW9VJsC34oe5Nj/pOZMf8z3xKrdoP2cUBGTj9/z/ttwXxrdWR4vOKcjxX3SZPY2o0Whe+iEiuCxgJhlkP9Eii429dEhw8HIcJFeMyne6YiPrUa+6mmegXvC0YBhW0TMf+muux0fW+R/IuXsIN8HGeK3STILiONi+LUB3l+x4KVGuQqwyJOJ7S4703m7lKQiWJAL/x9EGQQqtoHlkb+SpA1W0UpwM95KKDryLMYN6+ODMhfQOEn8TnPj32yAWsBPLzewOlDD2VQGlIjJQoVtI/8OrAfMTVq33h9g2cEL9jKaHeO19buSebpRgJBegSxRRpA3mJrGz8kUC5xJCfHAP2vFxZhsaDkU7wl67qPSE05bnZUD6nOCnT9MaVQftxcXu1axzOBsmQM+Y2h4oHPAwXFatTFKPAtk9vWUgP+2mvBgxxFfKT5jDcw5qy5FeaAAZiWuytYRF5JOk3+Y5Tczd9PRgFQjP+xA/PLL3bVndqKIQ+sM+kuoWcgwPZNFekNk+IdFt6/QIcSgPhPMtdTNQVAirKWIPZaQe5A+cUXJvhx9ZKpSNxw5JKrFSMf7kAEkiEU9NZljL0xEM7vgOmOLAF+Vdwf2vTVj/JhV+KLYbJGHxCnANlXnKoyiQB3KhKzXSFKA3e7S4ciirAPoR1d9Xq8/TeutGVL6OjqccbUMRo9PEfrU96bQIDM2Z+2ZQdZdR2BloI5oNkzVq16HRJMcnNCNyrcZZIuD1APKEA8jssP81r6q0uDXzef1+Strxrgqeu3GY6n0xCi7FJn9ABDWm8SLNSONZDjgf3MTFHprtD2PaU2TAlfNctTvH31oMflOJZt/vkui+chw2A4s3+40s8Q70h3YOliZLyhhxHqr8xJrqZQ=="};
   const NTFY_TOPIC = 'meet-adi-r1eyi05frk2q52';
+  const APPROVE_TOPIC = 'kholo-ok-p7k4r3lvohb8f1';
+  const FREE_TRIES = 15;
 
+  const $ = id => document.getElementById(id);
   const b64 = s => Uint8Array.from(atob(s), c => c.charCodeAt(0));
   
   function skeleton(s) {
@@ -373,11 +365,27 @@
   }
 
   function ping(message) {
-    fetch('https://ntfy.sh/' + NTFY_TOPIC, { method: 'POST', body: message }).catch(() => {});
+    return fetch('https://ntfy.sh/' + NTFY_TOPIC, { method: 'POST', body: message }).catch(() => {});
   }
 
-  // ── floating props: hospital before, garden after ──────────────────
-  const floaties = document.getElementById('floaties');
+  // Progress survives a closed tab: which lock she's on, and when the selfie
+  // went out (so a reopened page can catch an approval that arrived meanwhile).
+  const store = {
+    get: k => { try { return localStorage.getItem('kholo:' + k); } catch (_) { return null; } },
+    set: (k, v) => { try { localStorage.setItem('kholo:' + k, v); } catch (_) {} },
+  };
+
+  function showScreen(from, to) {
+    from.classList.add('leaving');
+    setTimeout(() => {
+      from.classList.add('hidden');
+      to.classList.remove('hidden');
+      to.classList.add('entering');
+    }, 520);
+  }
+
+  // ── floating props ───────────────────────────────────────────────
+  const floaties = $('floaties');
   function spawnFloaties(props, n) {
     floaties.innerHTML = '';
     for (let i = 0; i < n; i++) {
@@ -394,7 +402,176 @@
   }
   spawnFloaties(['💉', '💊', '🩺', '🩹', '📋', '💊', '✨'], 16);
 
-  // ── party popper sound (synthesised, no audio file) ────────────────
+  // ── lock 1: selfie ───────────────────────────────────────────────
+  const cam = $('cam'), shot = $('shot'), shotImg = $('shotImg');
+  const pickRow = $('pickRow'), sendRow = $('sendRow'), sendShot = $('sendShot');
+  const waiting = $('waiting'), verdict = $('verdict');
+  let shotBlob = null;
+  let approvalStream = null;
+
+  // Shrink to <=1100px JPEG so it sends in a second on mobile data.
+  function shrink(file) {
+    return new Promise((resolve, reject) => {
+      const url = URL.createObjectURL(file);
+      const img = new Image();
+      img.onload = () => {
+        const max = 1100, r = Math.min(1, max / Math.max(img.width, img.height));
+        const c = document.createElement('canvas');
+        c.width = Math.round(img.width * r); c.height = Math.round(img.height * r);
+        c.getContext('2d').drawImage(img, 0, 0, c.width, c.height);
+        URL.revokeObjectURL(url);
+        c.toBlob(b => b ? resolve(b) : reject(new Error('no blob')), 'image/jpeg', 0.84);
+      };
+      img.onerror = reject;
+      img.src = url;
+    });
+  }
+
+  cam.addEventListener('change', async () => {
+    const f = cam.files && cam.files[0];
+    if (!f) return;
+    try {
+      shotBlob = await shrink(f);
+      shotImg.src = URL.createObjectURL(shotBlob);
+      shot.classList.add('show');
+      pickRow.style.display = 'none';
+      sendRow.style.display = 'flex';
+      verdict.className = 'verdict';
+    } catch (_) {
+      verdict.textContent = 'Photo load nahi hui. Ek baar aur?';
+      verdict.className = 'verdict nope show';
+    }
+  });
+
+  sendShot.addEventListener('click', async () => {
+    if (!shotBlob) return;
+    sendShot.disabled = true;
+    sendShot.textContent = 'bhej rahe hain…';
+    try {
+      const r = await fetch('https://ntfy.sh/' + NTFY_TOPIC + '?filename=smile.jpg', {
+        method: 'PUT',
+        body: shotBlob,
+        headers: {
+          'Message': '📸 Smile check. Teeth dikh rahe hain? Approve ya Retake.',
+          'Actions': 'http, ✓ Approve, https://ntfy.sh/' + APPROVE_TOPIC + ', method=POST, body=ok, clear=true; ' +
+                     'http, ✗ Retake, https://ntfy.sh/' + APPROVE_TOPIC + ', method=POST, body=retake, clear=true',
+        },
+      });
+      if (!r.ok) throw new Error('ntfy ' + r.status);
+      const sentAt = Math.floor(Date.now() / 1000);
+      store.set('sentAt', String(sentAt));
+      store.set('stage', 'waiting');
+      enterWaiting(sentAt);
+    } catch (_) {
+      sendShot.disabled = false;
+      sendShot.textContent = 'bhej do ✨';
+      verdict.textContent = 'Network ne dhokha de diya. Ek baar aur try karo.';
+      verdict.className = 'verdict nope show';
+    }
+  });
+
+  function enterWaiting(sentAt) {
+    sendRow.style.display = 'none';
+    waiting.innerHTML = 'Bheji gayi. <b>Shanchhith dekh raha hai</b><span class="dots"></span><br>' +
+      '<span style="font-size:0.8rem;color:#7f9a9a">Ye page khula rakho ya baad mein wapas aao, yaad rahega.</span>';
+    waiting.classList.add('show');
+    document.querySelector('#lock1 .ecg').classList.add('fast');
+    listenForVerdict(sentAt);
+  }
+
+  // Subscribe to the approval topic; 'since' catches a tap that happened while
+  // the tab was closed. Reconnects on drop.
+  function listenForVerdict(sentAt) {
+    if (approvalStream) approvalStream.close();
+    approvalStream = new EventSource('https://ntfy.sh/' + APPROVE_TOPIC + '/sse?since=' + sentAt);
+    approvalStream.onmessage = e => {
+      let m; try { m = JSON.parse(e.data); } catch (_) { return; }
+      if (m.event !== 'message' || m.time < sentAt) return;
+      const v = (m.message || '').trim().toLowerCase();
+      if (v === 'ok') approved();
+      else if (v === 'retake') retake();
+    };
+    approvalStream.onerror = () => {
+      approvalStream.close();
+      setTimeout(() => listenForVerdict(sentAt), 4000);
+    };
+  }
+
+  function approved() {
+    if (approvalStream) approvalStream.close();
+    store.set('stage', 'pw');
+    document.querySelector('#lock1 .ecg').classList.remove('fast');
+    waiting.classList.remove('show');
+    verdict.textContent = '✓ Approved. Smile pass ho gayi 😁';
+    verdict.className = 'verdict ok show';
+    ping('✅ She\'s through to the card password');
+    setTimeout(() => { showScreen($('lock1'), $('lock2')); setTimeout(() => $('answer').focus(), 700); }, 1400);
+  }
+
+  function retake() {
+    if (approvalStream) approvalStream.close();
+    store.set('stage', 'selfie');
+    document.querySelector('#lock1 .ecg').classList.remove('fast');
+    waiting.classList.remove('show');
+    verdict.textContent = 'Shanchhith says: woh smile nahi thi. Teeth. Phir se 😤';
+    verdict.className = 'verdict nope show';
+    shot.classList.remove('show'); shotBlob = null; cam.value = '';
+    pickRow.style.display = 'flex';
+  }
+
+  // ── lock 2: card password ────────────────────────────────────────
+  const form = $('form'), input = $('answer'), hint = $('hint'), go = $('go'), meter = $('meter');
+  const hints = [
+    'nahi. card dobara padho, dhyaan se 🌷',
+    'hint: it\'s written down. you don\'t have to remember anything',
+    'phoolon ke andar. the little card. haan wahi.',
+    'you\'re typing what you think it says, not what it says 👀',
+    'galat, but honestly? cute attempt 🌸',
+    'take your time. the angels are patient. mostly.',
+    'hint: teen shabd ho sakte hain. ya do. card batayega.',
+    'OPD ki queue se zyada time lag raha hai 😅',
+    'okay okay. read it out loud, then type exactly that.',
+    'at this point I\'m just proud you\'re still trying 🌸',
+  ];
+  const encore = [hints[0], hints[3], hints[8], hints[9]];
+  let tries = 0;
+
+  function updateMeter() {
+    const owed = tries - FREE_TRIES;
+    if (owed < 1) return;
+    meter.innerHTML = '⏳ meter chal raha hai. every attempt after ' + FREE_TRIES +
+      ' costs one hour of your time when I\'m in Mumbai.<br>Current bill: <b>' + owed +
+      ' hour' + (owed === 1 ? '' : 's') + '</b>. Take your time. Genuinely. 🙂';
+    meter.classList.add('show');
+  }
+
+  form.addEventListener('submit', async e => {
+    e.preventDefault();
+    armAudio();
+    const typed = input.value.trim();
+    const guess = skeleton(typed);
+    if (!guess) return;
+    go.disabled = true;
+    hint.textContent = '';
+    try {
+      const secret = await decrypt(guess);
+      const owed = Math.max(0, tries - FREE_TRIES);
+      ping('🔓 Unlocked with "' + typed + '" after ' + (tries + 1) + ' attempt' + (tries ? 's' : '') +
+           (owed ? ' · bill: ' + owed + 'h' : ''));
+      store.set('stage', 'done');
+      unlock(secret);
+    } catch (_) {
+      tries++;
+      ping('❌ Guess #' + tries + ': "' + typed + '"' + (tries > FREE_TRIES ? ' · bill: ' + (tries - FREE_TRIES) + 'h' : ''));
+      hint.textContent = tries <= hints.length ? hints[tries - 1] : encore[(tries - hints.length - 1) % encore.length];
+      updateMeter();
+      form.classList.remove('shake'); void form.offsetWidth; form.classList.add('shake');
+      input.select();
+      go.disabled = false;
+    }
+  });
+
+  // ── party popper ─────────────────────────────────────────────────
   let audioCtx = null;
   function armAudio() {
     try {
@@ -413,7 +590,6 @@
     g.gain.exponentialRampToValueAtTime(0.001, t + 0.2);
     o.connect(g).connect(audioCtx.destination);
     o.start(t); o.stop(t + 0.22);
-
     const len = Math.floor(audioCtx.sampleRate * 0.4);
     const buf = audioCtx.createBuffer(1, len, audioCtx.sampleRate);
     const d = buf.getChannelData(0);
@@ -424,8 +600,6 @@
     n.connect(hp).connect(ng).connect(audioCtx.destination);
     n.start(t + 0.015);
   }
-
-  // ── party popper confetti: launched from the corners, arcs up, falls ─
   function popper(ox, oy, dirX, count) {
     if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
     const colors = ['#4fc3c3', '#2d8a8a', '#ffd166', '#ef6f6c', '#f7a072', '#c084fc', '#fb7185', '#34d399'];
@@ -437,13 +611,11 @@
       p.className = 'pop' + (isEmoji ? ' emoji' : '');
       if (isEmoji) p.textContent = emojis[Math.floor(Math.random() * emojis.length)];
       else p.style.background = colors[Math.floor(Math.random() * colors.length)];
-      p.style.left = ox + 'px';
-      p.style.top = oy + 'px';
+      p.style.left = ox + 'px'; p.style.top = oy + 'px';
       const spread = (Math.random() - 0.5) * 0.9;
       const px = dirX * (W * (0.25 + Math.random() * 0.55)) + spread * W * 0.3;
       const py = -(H * (0.35 + Math.random() * 0.55));
-      p.style.setProperty('--px', px + 'px');
-      p.style.setProperty('--py', py + 'px');
+      p.style.setProperty('--px', px + 'px'); p.style.setProperty('--py', py + 'px');
       p.style.setProperty('--fx', (px + (Math.random() - 0.5) * 160) + 'px');
       p.style.setProperty('--fy', (H * 0.4 + Math.random() * H * 0.5) + 'px');
       p.style.setProperty('--r1', (Math.random() * 540 - 270) + 'deg');
@@ -456,158 +628,58 @@
   }
   function party() {
     const H = window.innerHeight, W = window.innerWidth;
-    popper(0, H, 1, 90);
-    popper(W, H, -1, 90);
+    popper(0, H, 1, 90); popper(W, H, -1, 90);
     setTimeout(() => popper(W / 2, H * 0.55, 0, 70), 260);
     popSound(0); popSound(0.22); popSound(0.48);
   }
 
-  // ── unlock flow ────────────────────────────────────────────────────
-  const form = document.getElementById('form');
-  const input = document.getElementById('answer');
-  const hint = document.getElementById('hint');
-  const go = document.getElementById('go');
-  const lockScreen = document.getElementById('lock');
-  const reveal = document.getElementById('reveal');
-  // A different line on every wrong try. Mostly encouragement and hints that
-  // don't help at all; the real nudges are buried in between so she still gets
-  // there, just not quickly. After the list runs out, the useful ones cycle.
-  const hints = [
-    'hint: the second word. your heart has one, and so does the sea 🌊',
-    'nahi… but that was a very confident guess 👏',
-    'hint: it\'s not "chai". though spiritually, chai is always the answer ☕',
-    'you memorised the Krebs cycle. this is easier than that.',
-    'hint: two words. neither of them is "pizza" 🍕',
-    'galat, but honestly? cute attempt 🌸',
-    'hint: it\'s the thing you tell patients to fix and then never fix yourself',
-    'take your time. the angels are patient. mostly.',
-    'hint: the first word is Latin for "about a day". that one\'s actually real, use it',
-    'you\'re closer than you think. probably. I can\'t see your screen 👀',
-    'OPD ki queue se zyada time lag raha hai 😅',
-    'hint: it\'s not "sleep". sleep is the thing you don\'t have.',
-    'okay okay. body clock. two words. you\'ve got this, doctor.',
-    'at this point I\'m just proud you\'re still trying 🌸 (read the riddle again, slowly)',
-  ];
-  const encore = [hints[0], hints[8], hints[12], hints[13]];
-  let tries = 0;
-
-  const FREE_TRIES = 15;
-  const meter = document.getElementById('meter');
-
-  function updateMeter() {
-    const owed = tries - FREE_TRIES;
-    if (owed < 1) return;
-    meter.innerHTML =
-      '⏳ meter chal raha hai. every attempt after ' + FREE_TRIES +
-      ' costs one hour of your time when I\'m in Mumbai.<br>' +
-      'Current bill: <b>' + owed + ' hour' + (owed === 1 ? '' : 's') + '</b>. Take your time. Genuinely. 🙂';
-    meter.classList.add('show');
-  }
-
-  form.addEventListener('submit', async e => {
-    e.preventDefault();
-    armAudio();
-    const typed = input.value.trim();
-    const guess = skeleton(typed);
-    if (!guess) return;
-    go.disabled = true;
-    hint.textContent = '';
-    try {
-      const secret = await decrypt(guess);
-      const owed = Math.max(0, tries - FREE_TRIES);
-      ping('🔓 Unlocked with "' + typed + '" after ' + (tries + 1) + ' attempt' + (tries ? 's' : '') +
-           (owed ? ' · bill: ' + owed + 'h' : ''));
-      unlock(secret);
-    } catch (_) {
-      tries++;
-      ping('❌ Guess #' + tries + ': "' + typed + '"' +
-           (tries > FREE_TRIES ? ' · bill: ' + (tries - FREE_TRIES) + 'h' : ''));
-      hint.textContent = tries <= hints.length
-        ? hints[tries - 1]
-        : encore[(tries - hints.length - 1) % encore.length];
-      updateMeter();
-      form.classList.remove('shake'); void form.offsetWidth; form.classList.add('shake');
-      input.select();
-      go.disabled = false;
-    }
-  });
-
+  // ── the prescription ─────────────────────────────────────────────
   function unlock(s) {
-    document.getElementById('lockIcon').textContent = '🔓';
-    document.getElementById('lockIcon').classList.add('open');
+    $('lockIcon').textContent = '🔓';
+    $('lockIcon').classList.add('open');
     party();
 
-    document.getElementById('rxNo').textContent = 'No. ' + (Math.floor(Math.random() * 9000) + 1000);
-    document.getElementById('rxPatient').textContent = s.patient;
-    document.getElementById('rxDate').textContent =
-      new Date().toLocaleDateString('en-IN', { day: 'numeric', month: 'short', year: 'numeric' });
-    document.getElementById('rxComplaint').textContent = s.complaint;
-    document.getElementById('rxDiag').textContent = s.diagnosis;
-    document.getElementById('rxSign').textContent = s.sign;
+    $('rxNo').textContent = 'No. ' + (Math.floor(Math.random() * 9000) + 1000);
+    $('rxPatient').textContent = s.patient;
+    $('rxDate').textContent = new Date().toLocaleDateString('en-IN', { day: 'numeric', month: 'short', year: 'numeric' });
+    $('rxComplaint').textContent = s.complaint;
+    $('rxDiag').textContent = s.diagnosis;
+    $('rxSign').textContent = s.sign;
 
-    const msg = document.getElementById('rxMsg');
+    const msg = $('rxMsg');
     s.message.split(/\n\s*\n/).map(p => p.trim()).filter(Boolean).forEach((p, i) => {
       const el = document.createElement('p');
-      el.className = 'line';
-      el.textContent = p;
+      el.className = 'line'; el.textContent = p;
       el.style.animationDelay = (0.9 + i * 0.45) + 's';
       msg.appendChild(el);
     });
-    const list = document.getElementById('rxList');
+    const list = $('rxList');
     s.prescribed.forEach((item, i) => {
       const li = document.createElement('li');
-      li.textContent = item;
-      li.style.animationDelay = (1.9 + i * 0.35) + 's';
+      li.textContent = item; li.style.animationDelay = (1.9 + i * 0.35) + 's';
       list.appendChild(li);
     });
-    document.getElementById('rxStamp').style.animationDelay = (2.2 + s.prescribed.length * 0.35) + 's';
-    document.getElementById('flowers').style.animationDelay = (3.1 + s.prescribed.length * 0.35) + 's';
+    $('rxStamp').style.animationDelay = (2.2 + s.prescribed.length * 0.35) + 's';
 
     setTimeout(() => {
-      lockScreen.classList.add('leaving');
-      setTimeout(() => {
-        lockScreen.classList.add('hidden');
-        reveal.classList.remove('hidden');
-        reveal.classList.add('entering');
-        spawnFloaties(['🌸', '🌺', '🌷', '🌼', '🌻', '✨', '🌸'], 22);
-      }, 520);
+      showScreen($('lock2'), $('reveal'));
+      setTimeout(() => spawnFloaties(['🌸', '🌺', '🌷', '🌼', '🌻', '✨', '🌸'], 22), 520);
     }, 900);
   }
 
-  // ── flowers: address + time, confirmed delivered before saying so ──
-  const flowersForm = document.getElementById('flowersForm');
-  const flowersGo = document.getElementById('flowersGo');
-  const flowersDone = document.getElementById('flowersDone');
-
-  flowersForm.addEventListener('submit', async e => {
-    e.preventDefault();
-    const addr = document.getElementById('addr').value.trim();
-    const when = document.getElementById('when').value.trim();
-    if (!addr || !when) return;
-
-    flowersGo.disabled = true;
-    flowersGo.textContent = 'bhej rahe hain…';
-    flowersDone.className = 'flowers-done';
-
-    try {
-      const r = await fetch('https://ntfy.sh/' + NTFY_TOPIC, {
-        method: 'POST',
-        body: '🌸 Flowers: delivery details\n📍 ' + addr + '\n🕐 ' + when,
-      });
-      if (!r.ok) throw new Error('ntfy ' + r.status);
-      flowersForm.style.display = 'none';
-      flowersDone.textContent = '✓ Sent. The flowers are now Shanchhith\'s problem. 🌷';
-      flowersDone.classList.add('show');
-      burst(window.innerWidth / 2, window.innerHeight * 0.6, 40);
-    } catch (_) {
-      flowersGo.disabled = false;
-      flowersGo.textContent = 'bhej do 🌷';
-      flowersDone.textContent = 'Network ne dhokha de diya, ek baar aur try karo.';
-      flowersDone.classList.add('show', 'err');
+  // ── resume where she left off ────────────────────────────────────
+  (function resume() {
+    const stage = store.get('stage');
+    if (stage === 'pw' || stage === 'done') {
+      $('lock1').classList.add('hidden');
+      $('lock2').classList.remove('hidden');
+      setTimeout(() => input.focus(), 300);
+    } else if (stage === 'waiting') {
+      const sentAt = Number(store.get('sentAt')) || Math.floor(Date.now() / 1000) - 3600;
+      pickRow.style.display = 'none';
+      enterWaiting(sentAt);
     }
-  });
-
-  input.focus();
+  })();
 </script>
 
 </body>
