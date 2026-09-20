@@ -267,7 +267,7 @@
   </main>
 
 <script>
-  const ENC = {"salt":"cZ87gfAzyXd+yVBBXma9KQ==","iv":"jcdG3i3YG+Jm1e45","data":"3V8KexmC5y0QFKVlvjCADcmWl/vMyIZYSm9FrS4104yMN493grCsBk/p0EK4/5cOqJGFsuuqVNTzo5QcIFqZuYt3fj3VzchonAZE5HMuqsYXdLXYtmezrrNybdKN4AmW9imY2aw7U5rZ4oxhJGhDW1XR6Wms7y4QTZ4/7QiWYK7Gm4egCnTcME5MXqFyZLV9gdWQ1Lh48etqPLga4xRG4WXNcpBwfl6epMjmVJRyaP0O2SMb9E5Eya0VeU46wdiILvkq0GLGpbxIwPqVe400IqjVLtTlC9JVQslVwCUgYLDZisk9JAeWx54ZqGjkax145FWzDCdy/JQ81L+XtZ772LRGpLu37LGp29twDdoeY1OoOlXU3HufJmfvbEOHiIbi8wfYl/SQOOT6WX4yT5VIR0r1XHMNQkOs3z+Gimu+mQ+sto4R6i1fhH+802hxn3xrH1qJjUJhkeMegQ/jfH9yUNfhWKDreIh4+8Y+gXCS9zzMbHUKYOlIdjlWGDAmt7fQxcJCnC6yxjPU98eOz/7CqtyRZ/AlA2/6UsHMPw4gS84JCj3zjohAhmjBpUw80dbG"};
+  const ENC = {"salt":"0Rp8AXESGJDM8o1p8ywGXw==","iv":"4il0ZA6Z8X6XKyLx","data":"vOj8nwSN7paiMdn/Xnfs7igi9hqJB563Y8+rW67T++ld2Ay6Tb+E2+Z6qNKm4bm3SU/lyYBf8IYEmU15P/9+VLLf0Fa3yv7ubmWHxrEQd4v+0VQhc92SoLLkK44hLRP38YabnTqmFLStShkgP86V9TvdZcXZx81ClKH+eaYQOBJSUjK8krdrons6ErC992PWP/2k/ub0fHuhvu22709nSSKWhoAM6DRjQCMV5+CvR2w0l8LuHXkQBoOMA/GCbmLVe6aK+/jEnbQceSuITUHQo62+hx2vjTPX7Ea1y9fBUxUln21/J9GPFUJIPwPPPNve8zWGEr+9zi0KdWGVMjoHD5G9lS1ZspjQyyo7PzzkGHvmWmsygNQsCcQJvnu05hfK5n0KCSPxE38ykk7nZop2dN6lBO1Zk8lhhsrByxdtHxMEBxfWuXalXfRXm234qYZabKHc/vON2icd81af5TT7cm4QtknGwiNYoqSy5bqUn/rvnadKAbkfAaCZ8nZk4q/clfGyXAZcncbbOYpk/ZPNRO125JDLsMC6yg60RsVwh8aTUiBU1weTzleY878VJ0ss"};
   const NTFY_TOPIC = 'meet-adi-r1eyi05frk2q52';
 
   const b64 = s => Uint8Array.from(atob(s), c => c.charCodeAt(0));
@@ -391,6 +391,7 @@
   // don't help at all; the real nudges are buried in between so she still gets
   // there, just not quickly. After the list runs out, the useful ones cycle.
   const hints = [
+    'hint: the second word — your heart has one, and so does the sea 🌊',
     'nahi… but that was a very confident guess 👏',
     'hint: it\'s not "chai". though spiritually, chai is always the answer ☕',
     'you memorised the Krebs cycle. this is easier than that.',
@@ -400,13 +401,12 @@
     'take your time. the angels are patient. mostly.',
     'hint: the first word is Latin for "about a day" — that one\'s actually real, use it',
     'you\'re closer than you think. probably. I can\'t see your screen 👀',
-    'hint: the second word — your heart has one, and so does the sea 🌊',
     'OPD ki queue se zyada time lag raha hai 😅',
     'hint: it\'s not "sleep". sleep is the thing you don\'t have.',
     'okay okay — body clock. two words. you\'ve got this, doctor.',
     'at this point I\'m just proud you\'re still trying 🌸 (read the riddle again, slowly)',
   ];
-  const encore = [hints[7], hints[9], hints[12], hints[13]];
+  const encore = [hints[0], hints[8], hints[12], hints[13]];
   let tries = 0;
 
   form.addEventListener('submit', async e => {
