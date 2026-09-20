@@ -224,10 +224,11 @@
       <div class="lockicon" id="lockIcon">🔒</div>
       <p class="eyebrow">password protected</p>
       <div class="riddle">
-        <p class="line" style="animation-delay:0.35s">Password hint —</p>
-        <p class="line" style="animation-delay:0.6699999999999999s">the thing your night shifts</p>
-        <p class="line" style="animation-delay:0.99s">have completely destroyed.</p>
-        <p class="line" style="animation-delay:1.31s">(Two words. Spell it right, doctor.)</p>
+        <p class="line" style="animation-delay:0.35s">Bujho to jaano —</p>
+        <p class="line" style="animation-delay:0.6699999999999999s">I turn once a day inside you,</p>
+        <p class="line" style="animation-delay:0.99s">kept by a tiny clock behind your eyes,</p>
+        <p class="line" style="animation-delay:1.31s">and broken by every night you stayed awake.</p>
+        <p class="line" style="animation-delay:1.63s">(Two words. Mind the spelling.)</p>
       </div>
       <form id="form" autocomplete="off">
         <input id="answer" type="text" placeholder="type your answer" autocapitalize="off" autocorrect="off" spellcheck="false" inputmode="text">
@@ -266,7 +267,7 @@
   </main>
 
 <script>
-  const ENC = {"salt":"5VJRVXrgJwS8Z34G/2xpSg==","iv":"BjHzBNxG7FNMAUVQ","data":"rkhcNQUKk85f4JQ1Y0na0W1iaeGaYiyFGQaO9tI1FflewN/xKvFTwK3eiuWCLBZJsVOL6ErDWe5ZA40MugyX64ccssXt96tL/WlkMxcHCkRLrSx3qo3WY6IEaL19aeIlz+svnU6ue5EJROVUZpOJCBiONlTS1nKi3mvuuRwZ/315O3siVRZYuXu+ceO94PNdZmWbkl9O3SADC6bM7DHbhiLhjimmOzTWj2uU06MElsz06dnh00c2y0UIWC+pgRUv/YO89FkPEYcKAZWhS2cdFls24bFkLkswFz6oxVzCf30JxzBZpBUwkwsSe+cLhgNKYfvwndDlJaDYU35rZ2K+fUmzh9xgIzMOh8sQKZH9YlUsnLuEHRwV+z/aFvGi4s4cPlmXeMN4YE0IQyYRemk/OCuTD+e1OdHZPd9UTFD4Uy5OFnitZ0704eOCtLEVH+lgEWhn9e7DAGB6Xq+NVxEQviX087U80dSSKX7okiDeHB+WQ07GX/TKOKgVZ/Bl1mCKM4E9aE5y+K5F47+m7lzTUhEwRcF1InehuM4PG4D7a4XBicCXCsXUtJ3Xswd2aCG0"};
+  const ENC = {"salt":"coaPiPvlv0tzsaUjrgTwvQ==","iv":"DnnL+bQVRMbQEfrf","data":"89np835Pn70a8h6OLU7Pl4aZJ3ZFqOjY2lqxngAelgDEK8QGALB2RiBjtQfHAeyJHoaz4psAH/0tV/JOneEA+Vvxaaj9MSAeaAX46ASh1lZ4T3wvHAnRnNiMPFOQkcFqmuylDXplTCZ0zYqGroJQrO4X+0wJrydUDse2hD32MHD5GW4SDb+xMcVJSxnYVunbRz6W5HFZ14AqAThWnnHvRaWRl3w4HJu1wWsQj9i6hs0CpTBWmN5yx2SNfaHxtMZnG8HkZhZ8aHD2zaWp+eeHH8Ls42jyKo4/6wFtE45rmChgx4g82BCj15MrdukhLYaZrYw4y0son61GoD6dKDvv+KUy4oI3U+0Mt/eXXKRSlBrMj+QxdYNq9oYYY7kvyIDovUlosdDcg5VeCJ08rTvZ6Ct7yh9Gqu4FLCP+bxTpcB8NzwYraUhxKuyb7N0vgkHEvKaVuDDif818US3dGrNVzO7IHkn3BzKBrKHU5Nlaufa1dwCcBb0h/6qpOi2oQOTaQeJlDAaedcsVh2h2b0kRlyTwJV4rT5gi3kpPFILtYv7HPkIc1T3iqJ60VtNwvcn0"};
   const NTFY_TOPIC = 'meet-adi-r1eyi05frk2q52';
 
   const b64 = s => Uint8Array.from(atob(s), c => c.charCodeAt(0));
@@ -379,10 +380,13 @@
   const go = document.getElementById('go');
   const lockScreen = document.getElementById('lock');
   const reveal = document.getElementById('reveal');
+  // A new nudge only every second wrong try, and none of them spell it out —
+  // she's meant to take her time, not be handed the answer.
   const hints = [
-    'nahi… spelling check karo 🙈',
-    'hint: two words. the second one has an "h" you keep forgetting',
-    'c-i-r-c-a-d-i-a-n … r-h-y-t-h-m 🙄',
+    'nahi… bujho 🤔',
+    'hint: it\'s a thing, not a person',
+    'hint: the second word has six letters and exactly one vowel — and it isn\'t a, e, i, o or u',
+    'you know the words. it\'s the spelling 🙄',
   ];
   let tries = 0;
 
@@ -398,7 +402,7 @@
       unlock(secret);
     } catch (_) {
       tries++;
-      hint.textContent = hints[Math.min(tries - 1, hints.length - 1)];
+      hint.textContent = hints[Math.min(Math.floor((tries - 1) / 2), hints.length - 1)];
       form.classList.remove('shake'); void form.offsetWidth; form.classList.add('shake');
       input.select();
       go.disabled = false;
