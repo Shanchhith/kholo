@@ -164,6 +164,7 @@
   .verdict.show { display: block; animation: rise 0.45s ease both; }
   .verdict.ok   { background: #e6f7f0; border: 1.5px solid #9edbc2; color: #1f6b4e; }
   .verdict.nope { background: #fff0ee; border: 1.5px solid #f3b8b1; color: #a1362d; }
+  .build { margin: 18px 0 -8px; font-size: 0.58rem; letter-spacing: 0.1em; color: #b9cfcd; }
 
   /* ── password step ───────────────────────────────────────────── */
   form.pw { display: flex; flex-direction: column; gap: 14px; align-items: center; }
@@ -285,6 +286,7 @@
 
       <p class="waiting" id="waiting"></p>
       <p class="verdict" id="verdict"></p>
+      <p class="build">b202609201547</p>
     </section>
 
     <!-- lock 2: the card in the flowers -->
@@ -338,7 +340,8 @@
   </main>
 
 <script>
-  const ENC = {"salt":"R1Ak03HyxoiZ6lPFoaIXhw==","iv":"iT7lGFxKkUx4VSHP","data":"gDGIj9D4TkUluvBqW2Qm5zDwFq7dPkUwRrz8YbTyUMMUkO1dCsKwOX9ThAZg07FEd7fiA0bslmZUNtky5MJ4y44AcgLkmL5ys5SQj4neeGP39mVEDKUFcAqJAyp3FgTOc7h5txO3JGaWmlj+EV591U7Bq3AcfZ/108N8VaqYctRI0Q7W6ZSsCcoiiRj92ebNAuDYrVh1yeM5Ek7PbxgiGjD6GbEwOAWlauIFPX7SMTmGcqzplk6K7tzcAA7deQj3anFC7Sxwub+pAIqaJC7K/MgS1Ut+XRRDlp17lBNp5JC2FfoZ1YwhAzdNBNp3A1i7SZVRsH+oK6Kh6qq+BdSUP5LdwtDZ5dD1YLupQhHJ42FVwGucHXK2AZCurLbD+myezDkir4W6o//9bADScY+hpVjFBFBzhRmS3OJvuJmLidtpy1hPiRXtUC5W/UHe6KZTm23Kp1f/blzAf+kDTaYfe0j1LHiNomJbcUtjRy+L23KfE06G2fpCgdHe0FcGXf4n7BUN0XdcLzw9jf7psLePID+BPyrMjR0VsrS7NOl0DQAEGfhmEL2aU5YfNyeMgMMk8BWPkvjp3V4Za24b87hRKoLjJ6+U+3G7p6jKa/VchIxbnX4F3nq9VPsRZACy2VC/ZZHKhhEPldJgmHNJ4pN9cyPHPeGa+QFeqsftuQhD/gPyttu0n/fqqD1vGZvWl+/pOaFFOD4yjwYR5DIFH2juUXFJpNf7NfkbdgVPgT4JzacEuLTSzkclkL0P1zKuR6vEWEcxagihGxKXJwEN4xESn3wJ7soyxFfi/jWsPNzxW0c5nTVjIusJtBoYdEanoM1EPoqKhCGWjTqI4Rt+3jbufHbPm70bQsiqyv7P4D0V5bkdpqejlyH8lr9ynIOypl+JnbLNQYAXhgP4FJoWYMvL0MkY/rYMuQyIy2LcjIBLrv7SA5Tn0hhHZRcDl5aCunloEnEXS6F/7yiYO1Q2O6S/D/i7McJXWqW2twvUE1CQS3AS3eGcFUmRi92PKTonYUiMuZoCR0OXbwZKIIOtDT3LgA=="};
+  const ENC = {"salt":"oQsG1toFkx9DLlKChQVR0A==","iv":"FfHVJbrlWxTiThWq","data":"JmuA27Q24TmnEbkZEVO2/qI3USLvgGIPov+tmz16aWqQLMsMcdoK/IaobzsM3dZO+slUcKdMFzrVLoDk2b247WBxF09de8iWsYnr2S5CE8P36gX/Ege0xZiZtc2p4mreaSAwJr5VYUWzRj9VT7rb9o2jw5GjFXSDB+LqC51kSuv+YdqttEwpWKjX99TRYHyeKmIdhNnGh7KrDqE5VmjAbY5pVkUwwqwkWNvigtfL15eHmJp77yLl21Zyezxi828flpCB2nm/HSXPTepJxOWE/CH622kIIXA6JmdmOV1L47isUfJ6M00zQYUvJNF1XX8/9vxXmQcIHu26NyMEo0bn5Hmdh1ZwgoQhsRLPFeGlzqUfaVT9ysgn47O7yx/UcIuUvxnkz51lzxMWo1Rrwoq16rqwzGK5No2+oJd9FX3NrUIYoOGM6ngTzAs9RAk9C71P+h2r8T3q25Ul6UEI8tctEPG+8dQzoNtAB9fofgKcJxl0Y97ABbqUBk0OCIeun7gKq+PUoPKpMQHjHSk8SAr6KfvFj5gdz/VsfS076JickyDb0mu+uavQJ3RpJ6XdSmosqvAQ1zY2Me98o0yDrg+3UswZrAb6gjlE4m2rxs/8xz3y+Y4DeUzxZaitAhOLEn1JVUmWEs2ZQ+nBb6nQMzya3dEV8n4Fnfq28mNP1ZT52orOAV7Evr4RcTnsG+CbJeQi+51hoggcWxCGp7yoLEFpV9j5d5AqYZObDAwd15+nwdvpX7MFDdTX12Bs7iC/jx5mzkF9mJPImMQ+wWItgf5dy3LlCAMxT42KrHiDBHRCjDPKo+7PN6DELtyTC5yZOf6osWxPABzVQS+UllYUHWSZrE2UdLe8Wrs0jD4/ggWU/A6kCIotQD1J+xtYFXB7wfYIbnJPTKy2KjfHKmdbdz1k3BUPaYngFAExojxmaDj0JD+oabMceBO8KuqlfyTG8S+rndMzff6KFKgMyZGkn+2kPUWT1UND98V2Kq9jSm+MDoEnl7rfxuWoPMPXZt0D+26an/v9ME8yzTyDGLCktrOK+g=="};
+  const BUILD = 'b202609201547';
   const NTFY_TOPIC = 'meet-adi-r1eyi05frk2q52';
   const APPROVE_TOPIC = 'kholo-ok-p7k4r3lvohb8f1';
   const FREE_TRIES = 15;
@@ -457,16 +460,21 @@
         actions: 'http, ✓ Approve, https://ntfy.sh/' + APPROVE_TOPIC + ', method=POST, body=ok, clear=true; ' +
                  'http, ✗ Retake, https://ntfy.sh/' + APPROVE_TOPIC + ', method=POST, body=retake, clear=true',
       });
-      const r = await fetch('https://ntfy.sh/' + NTFY_TOPIC + '?' + q, { method: 'PUT', body: shotBlob });
-      if (!r.ok) throw new Error('ntfy ' + r.status);
+      // POST + text/plain is a "simple" CORS request (no preflight at all); ntfy
+      // sniffs the bytes and still files it as an image/jpeg attachment.
+      const r = await fetch('https://ntfy.sh/' + NTFY_TOPIC + '?' + q, {
+        method: 'POST', body: shotBlob, headers: { 'Content-Type': 'text/plain' },
+      });
+      if (!r.ok) throw new Error('HTTP ' + r.status);
       const sentAt = Math.floor(Date.now() / 1000);
       store.set('sentAt', String(sentAt));
       store.set('stage', 'waiting');
       enterWaiting(sentAt);
-    } catch (_) {
+    } catch (err) {
       sendShot.disabled = false;
       sendShot.textContent = 'bhej do ✨';
-      verdict.textContent = 'Network ne dhokha de diya. Ek baar aur try karo.';
+      verdict.innerHTML = 'Network ne dhokha de diya. Ek baar aur try karo.' +
+        '<br><span style="font-size:0.72rem;opacity:0.7">(' + String(err && err.message || err).slice(0, 80) + ' · ' + BUILD + ')</span>';
       verdict.className = 'verdict nope show';
     }
   });
