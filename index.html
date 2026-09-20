@@ -168,6 +168,7 @@
     opacity: 0; animation: rise 0.8s ease 0.55s both;
   }
   .late { opacity: 0; animation: rise 0.6s ease 0.95s both; }
+  #reveal .big-title { font-size: 1.5rem; line-height: 1.35; }
 
   /* ── quiz ────────────────────────────────────────────────────── */
   .progress { display: flex; gap: 6px; justify-content: center; margin: 4px 0 18px; }
@@ -217,7 +218,6 @@
     letter-spacing: 0.06em; font-variant-numeric: tabular-nums; line-height: 1;
   }
   .clock.soon { font-size: 1.35rem; letter-spacing: 0.02em; }
-  .teaser-sub { font-size: 0.78rem; color: #8bb3b3; margin: 8px 0 0; }
 
   /* ── celebrations ────────────────────────────────────────────── */
   .pop {
@@ -263,11 +263,11 @@
       <div class="lockicon">🔒</div>
       <p class="eyebrow">step 1 of 3</p>
       <div class="riddle">
-        <p class="line sher" style="animation-delay:0.35s">Raat bhar ka hai mehmaan andhera,</p>
-        <p class="line sher" style="animation-delay:0.6699999999999999s">kis ke roke ruka hai savera.</p>
+        <p class="line sher" style="animation-delay:0.35s">Tu jo muskuraye toh hawayen gungunati hain,</p>
+        <p class="line sher" style="animation-delay:0.6699999999999999s">Khushiyan khud chalkar tere paas aati hain!</p>
       </div>
-      <p class="step-title">Pehla kaam: ek asli smile 😁</p>
-      <p class="step-text">Take a selfie. Teeth dikhne chahiye.<br>Smile ka scientific analysis hoga.</p>
+      <p class="step-title">Pehle smile, phir baat 😁</p>
+      <p class="step-text">Selfie lo. Teeth compulsory.<br>Ek bahut serious algorithm check karega.</p>
 
       <div class="shot" id="shot"><img id="shotImg" alt="your smile"></div>
 
@@ -282,7 +282,7 @@
 
       <p class="waiting" id="waiting"></p>
       <p class="verdict" id="verdict"></p>
-      <p class="build">b202609201628</p>
+      <p class="build">b202609201658</p>
     </section>
 
     <!-- 2. congrats -->
@@ -292,7 +292,7 @@
       </svg>
       <div class="lockicon">🔓</div>
       <p class="big-title">Congratulations, Duggal saab! 🎉</p>
-      <p class="big-text">Just a few more steps, and something as beautiful as you is waiting to arrive at your door 🤍</p>
+      <p class="big-text">Bas 13 sawaal aur. Uske baad kuch tumhare darwaze tak aayega. Tumhari tarah hi khoobsurat... theek hai, rehne do. 13 sawaal.</p>
       <div class="late"><button class="btn" id="toQuiz" type="button">chalo ✨</button></div>
     </section>
 
@@ -316,20 +316,21 @@
         <polyline points="0,20 38,20 46,20 52,7 60,33 68,20 96,20 128,20 136,20 142,13 148,27 154,20 200,20 232,20 240,20 246,7 254,33 262,20 300,20"/>
       </svg>
       <p class="eyebrow">step 3 of 3</p>
-      <p class="big-title">Shubh raatri, Duggal sahab 🌙</p>
+      <p class="big-title">Pichli baar wala jaldi ho gaya tha, isliye dobara se: goodnight Duggal sahab ko, jo aaj cutie bane hai...</p>
       <div class="sher-box">
-        <p class="line sher" style="animation-delay:1s">Raat ki har shift dua ke saath guzre,</p>
-        <p class="line sher" style="animation-delay:1.5s">har mareez tumhare haathon se theek ho jaaye,</p>
-        <p class="line sher" style="animation-delay:2s">farishte aaj tumhare ward mein hain,</p>
-        <p class="line sher" style="animation-delay:2.5s">aur thodi der mein, tumhare darwaze pe bhi 🕊️</p>
-        <p class="sign" style="animation-delay:3.2s">Shanchhith</p>
+        <p class="line sher" style="animation-delay:1s">Dilon ko tere tabassum ki yaad yun aai,</p>
+        <p class="line sher" style="animation-delay:1.5s">ki jagmaga uthen jis tarah mandiron mein charagh.</p>
+        <p class="line sher" style="animation-delay:2s">Zameen pe jab bhi teri hansi ke phool khile,</p>
+        <p class="line sher" style="animation-delay:2.5s">faza mein jaise bahaaron ke kaarwan utre.</p>
+        <p class="line sher" style="animation-delay:3s">Yeh rang, yeh noor, yeh khushiyan qudrat ki,</p>
+        <p class="line sher" style="animation-delay:3.5s">teri ek muskaan se hi sab bahaar paate hain.</p>
+        <p class="sign" style="animation-delay:4.2s">Shanchhith</p>
       </div>
 
       <div class="teaser" id="teaser">
-        <p class="teaser-title">Ek aur cheez 🚪</p>
-        <p class="teaser-text">Kuch tumhare darwaze pe aa raha hai.<br>Bas thoda intezaar.</p>
+        <p class="teaser-title">Darwaza 🚪</p>
+        <p class="teaser-text">30 minute. Phone paas rakho.<br>Darwaza khol dena.</p>
         <div class="clock" id="clock">30:00</div>
-        <p class="teaser-sub">phone paas rakho</p>
       </div>
     </section>
   </main>
@@ -337,9 +338,9 @@
 <script>
   const NTFY_TOPIC = 'meet-adi-r1eyi05frk2q52';
   const APPROVE_TOPIC = 'kholo-ok-p7k4r3lvohb8f1';
-  const QUIZ = [{"key":"Movies","q":"Teen favourite movies","note":"Sirf teen. Haan, mushkil hai.","multi":3,"ph":["pehli","doosri","teesri"]},{"key":"Shows","q":"Favourite shows","note":"How I Met Your Mother doesn't count. Sabko pata hai.","area":true,"ph":"jitne bhi ho"},{"key":"Travel","q":"Dream picnic ya travel spot","note":"Jahan jaana hai. Kabhi bhi.","area":true,"ph":"ek ya do jagah"},{"key":"Food","q":"Favourite food","note":"Diet wala answer nahi. Asli wala.","ph":"be honest"},{"key":"Colour","q":"Favourite colour","note":"I think pink suits you. But that's just one algorithm's opinion.","ph":"pink?"},{"key":"Chai","q":"Chai ya coffee?","note":"Iska ek sahi jawab hai. Soch ke likhna.","ph":"chai. obviously."},{"key":"Song","q":"Ek gaana jo aajkal loop pe hai","note":"The one you'd be slightly embarrassed to admit.","ph":"koi bhi"},{"key":"Laugh","q":"Ek cheez jo hamesha hasa deti hai","note":"Meme, memory, ya koi insaan.","area":true,"ph":"kuch bhi"}];
+  const QUIZ = [{"key":"Movies","q":"Teen favourite movies","note":"Sirf teen. Haan, mushkil hai.","multi":3,"ph":["pehli","doosri","teesri"]},{"key":"Shows","q":"Favourite shows","note":"How I Met Your Mother doesn't count. Sabko pata hai.","area":true,"ph":"jitne bhi ho"},{"key":"Travel","q":"Dream picnic ya travel spot","note":"Jahan jaana hai. Kabhi bhi.","area":true,"ph":"ek ya do jagah"},{"key":"Food","q":"Favourite food","note":"Diet wala answer nahi. Asli wala.","ph":"be honest"},{"key":"Colour","q":"Favourite colour","note":"I think pink suits you. But that's just one algorithm's opinion.","ph":"pink?"},{"key":"Chai","q":"Coffee ya chai, akele ya kisi ke saath?","note":"Par bina sutte ke, haan.","ph":"sach bolna"},{"key":"Song","q":"Ek gaana jo aajkal loop pe hai","note":"The one you'd be slightly embarrassed to admit.","ph":"koi bhi"},{"key":"Nickname","q":"Bachpan ka ek nickname jo abhi bhi chalta hai","note":"Duggal sahab ke alawa.","ph":"batao"},{"key":"Day off","q":"Ek din off mile bina guilt ke, kya karogi?","note":"Sona bhi valid hai.","area":true,"ph":"poora din tumhara"},{"key":"Skill","q":"Ek skill jo seekhni hai par time nahi mila","note":"Iss saal? Agle saal? Kabhi?","ph":"kuch bhi"},{"key":"Comfort","q":"Comfort movie for a bad day","note":"Jo sau baar dekhi hai, phir bhi.","ph":"woh wali"},{"key":"Laugh","q":"Ek cheez jo hamesha hasa deti hai","note":"Meme, memory, ya koi insaan.","area":true,"ph":"kuch bhi"},{"key":"Khushi","q":"Ek cheez jo bina wajah khush kar deti hai","note":"Chhoti wali.","ph":"chhoti si"}];
   const TEASER_MINUTES = 30;
-  const BLESSING_LINES = 4;
+  const BLESSING_LINES = 6;
 
   const $ = id => document.getElementById(id);
   try { ['kholo:stage', 'kholo:sentAt'].forEach(k => localStorage.removeItem(k)); } catch (_) {}
@@ -443,7 +444,7 @@
     } catch (err) {
       resetSendButton();
       verdict.innerHTML = 'Network ne dhokha de diya. Ek baar aur try karo.' +
-        '<br><span style="font-size:0.72rem;opacity:0.7">(' + String(err && err.message || err).slice(0, 80) + ' · b202609201628)</span>';
+        '<br><span style="font-size:0.72rem;opacity:0.7">(' + String(err && err.message || err).slice(0, 80) + ' · b202609201658)</span>';
       verdict.className = 'verdict nope show';
     }
   });
@@ -468,7 +469,7 @@
     analysisTimer = setInterval(render, 2600);
     waiting.classList.add('show');
     document.querySelector('#lock1 .ecg').classList.add('fast');
-    if (autoReject) setTimeout(() => retake('✗ Not happy enough. Upload a good smile, Duggal sahab 😐'), 6500);
+    if (autoReject) setTimeout(() => retake('✗ Ye smile nahi, formality thi. Phir se, Duggal sahab 😐'), 6500);
     else listenForVerdict(sentAt);
   }
 
@@ -494,7 +495,7 @@
 
   function approved() {
     stopAnalysis();
-    verdict.innerHTML = '<b>✓ Smile verified.</b> Happiness level: dangerous 😁';
+    verdict.innerHTML = '✓ <b>OMG, is this you, pretty womaaaaan</b> 😍';
     verdict.className = 'verdict ok show';
     const r = verdict.getBoundingClientRect();
     burstAt(r.left + r.width / 2, r.top, 40);
@@ -504,7 +505,7 @@
 
   function retake(msg) {
     stopAnalysis();
-    verdict.textContent = msg || '✗ Not happy enough. Do it again 😐';
+    verdict.textContent = msg || '✗ Itni halki smile? Jabardasti nahi, man se khush hokar karo 😐';
     verdict.className = 'verdict nope show';
     shot.classList.remove('show'); shotBlob = null; cam.value = '';
     sendRow.style.display = 'none';
@@ -607,7 +608,7 @@
     const tick = () => {
       const left = Math.max(0, end - Date.now());
       if (left <= 0) {
-        clock.textContent = 'koi bhi minute ab 🚪';
+        clock.textContent = 'mil gaya? 🚪';
         clock.classList.add('soon');
         clearInterval(t);
         return;
