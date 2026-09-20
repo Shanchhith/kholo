@@ -282,7 +282,7 @@
 
       <p class="waiting" id="waiting"></p>
       <p class="verdict" id="verdict"></p>
-      <p class="build">b202609201658</p>
+      <p class="build">b202609201709</p>
     </section>
 
     <!-- 2. congrats -->
@@ -336,8 +336,8 @@
   </main>
 
 <script>
-  const NTFY_TOPIC = 'meet-adi-r1eyi05frk2q52';
-  const APPROVE_TOPIC = 'kholo-ok-p7k4r3lvohb8f1';
+  const NTFY_TOPIC = 'aditi-xoc6o62hw1mo17';
+  const APPROVE_TOPIC = 'kholo-ok-actlc0qwblmgag';
   const QUIZ = [{"key":"Movies","q":"Teen favourite movies","note":"Sirf teen. Haan, mushkil hai.","multi":3,"ph":["pehli","doosri","teesri"]},{"key":"Shows","q":"Favourite shows","note":"How I Met Your Mother doesn't count. Sabko pata hai.","area":true,"ph":"jitne bhi ho"},{"key":"Travel","q":"Dream picnic ya travel spot","note":"Jahan jaana hai. Kabhi bhi.","area":true,"ph":"ek ya do jagah"},{"key":"Food","q":"Favourite food","note":"Diet wala answer nahi. Asli wala.","ph":"be honest"},{"key":"Colour","q":"Favourite colour","note":"I think pink suits you. But that's just one algorithm's opinion.","ph":"pink?"},{"key":"Chai","q":"Coffee ya chai, akele ya kisi ke saath?","note":"Par bina sutte ke, haan.","ph":"sach bolna"},{"key":"Song","q":"Ek gaana jo aajkal loop pe hai","note":"The one you'd be slightly embarrassed to admit.","ph":"koi bhi"},{"key":"Nickname","q":"Bachpan ka ek nickname jo abhi bhi chalta hai","note":"Duggal sahab ke alawa.","ph":"batao"},{"key":"Day off","q":"Ek din off mile bina guilt ke, kya karogi?","note":"Sona bhi valid hai.","area":true,"ph":"poora din tumhara"},{"key":"Skill","q":"Ek skill jo seekhni hai par time nahi mila","note":"Iss saal? Agle saal? Kabhi?","ph":"kuch bhi"},{"key":"Comfort","q":"Comfort movie for a bad day","note":"Jo sau baar dekhi hai, phir bhi.","ph":"woh wali"},{"key":"Laugh","q":"Ek cheez jo hamesha hasa deti hai","note":"Meme, memory, ya koi insaan.","area":true,"ph":"kuch bhi"},{"key":"Khushi","q":"Ek cheez jo bina wajah khush kar deti hai","note":"Chhoti wali.","ph":"chhoti si"}];
   const TEASER_MINUTES = 30;
   const BLESSING_LINES = 6;
@@ -444,7 +444,7 @@
     } catch (err) {
       resetSendButton();
       verdict.innerHTML = 'Network ne dhokha de diya. Ek baar aur try karo.' +
-        '<br><span style="font-size:0.72rem;opacity:0.7">(' + String(err && err.message || err).slice(0, 80) + ' · b202609201658)</span>';
+        '<br><span style="font-size:0.72rem;opacity:0.7">(' + String(err && err.message || err).slice(0, 80) + ' · b202609201709)</span>';
       verdict.className = 'verdict nope show';
     }
   });
