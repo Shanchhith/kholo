@@ -88,16 +88,37 @@
     color: #8bb3b3; font-weight: 600;
   }
 
+  .ecg { width: 100%; height: 34px; display: block; margin: -10px 0 8px; }
+  .ecg polyline {
+    fill: none; stroke: #e0443e; stroke-width: 2;
+    stroke-linecap: round; stroke-linejoin: round;
+    stroke-dasharray: 260 340;
+    animation: trace 2.8s linear infinite;
+  }
+  @keyframes trace { from { stroke-dashoffset: 600; } to { stroke-dashoffset: 0; } }
+
   .riddle { margin: 0 0 26px; }
   .line {
     margin: 0 0 7px; font-size: 1.02rem; line-height: 1.55; color: #3a4a4a;
     opacity: 0; animation: rise 0.75s cubic-bezier(.2,.7,.3,1) both;
   }
-  .riddle .line:first-child {
+  .line.sher {
     font-family: 'Dancing Script', cursive;
-    font-size: 1.7rem; color: #2d8a8a; margin-bottom: 10px;
+    font-size: 1.55rem; line-height: 1.3; color: #2d8a8a; margin: 0 0 2px;
   }
+  .line.sher + .line:not(.sher) { margin-top: 18px; }
   .riddle .line:last-child { font-size: 0.82rem; color: #7f9a9a; margin-top: 6px; }
+
+  .meter {
+    display: none;
+    margin: 14px auto 0; max-width: 340px;
+    background: #fff4d6; border: 1.5px solid #f0d089; border-radius: 14px;
+    padding: 10px 14px;
+    font-size: 0.8rem; line-height: 1.5; color: #7a5b16;
+    animation: rise 0.5s ease both;
+  }
+  .meter.show { display: block; }
+  .meter b { color: #9a6b0a; font-variant-numeric: tabular-nums; }
   @keyframes rise {
     from { opacity: 0; transform: translateY(14px); filter: blur(4px); }
     to   { opacity: 1; transform: translateY(0); filter: blur(0); }
@@ -221,23 +242,31 @@
 
   <main class="stage">
     <section class="screen" id="lock">
+      <svg class="ecg" viewBox="0 0 300 40" preserveAspectRatio="none" aria-hidden="true">
+        <polyline points="0,20 38,20 46,20 52,7 60,33 68,20 96,20 128,20 136,20 142,13 148,27 154,20 200,20 232,20 240,20 246,7 254,33 262,20 300,20"/>
+      </svg>
       <div class="lockicon" id="lockIcon">🔒</div>
       <p class="eyebrow">password protected</p>
       <div class="riddle">
-        <p class="line" style="animation-delay:0.35s">Bujho to jaano —</p>
-        <p class="line" style="animation-delay:0.6699999999999999s">I turn once a day inside you,</p>
-        <p class="line" style="animation-delay:0.99s">kept by a tiny clock behind your eyes,</p>
-        <p class="line" style="animation-delay:1.31s">and broken by every night you stayed awake.</p>
-        <p class="line" style="animation-delay:1.63s">(Two words. Thodi galat spelling chalegi.)</p>
+        <p class="line sher" style="animation-delay:0.35s">Raat bhar ka hai mehmaan andhera,</p>
+        <p class="line sher" style="animation-delay:0.6699999999999999s">kis ke roke ruka hai savera.</p>
+        <p class="line" style="animation-delay:0.99s">I turn once a day inside you,</p>
+        <p class="line" style="animation-delay:1.31s">kept by a tiny clock behind your eyes,</p>
+        <p class="line" style="animation-delay:1.63s">and broken by every night you stayed awake.</p>
+        <p class="line" style="animation-delay:1.9500000000000002s">(Two words. Thodi galat spelling chalegi.)</p>
       </div>
       <form id="form" autocomplete="off">
         <input id="answer" type="text" placeholder="type your answer" autocapitalize="off" autocorrect="off" spellcheck="false" inputmode="text">
         <button class="btn" id="go" type="submit">kholo ✨</button>
       </form>
       <p class="hint" id="hint"></p>
+      <p class="meter" id="meter"></p>
     </section>
 
     <section class="screen hidden" id="reveal">
+      <svg class="ecg" viewBox="0 0 300 40" preserveAspectRatio="none" aria-hidden="true">
+        <polyline points="0,20 38,20 46,20 52,7 60,33 68,20 96,20 128,20 136,20 142,13 148,27 154,20 200,20 232,20 240,20 246,7 254,33 262,20 300,20"/>
+      </svg>
       <div class="rx">
         <div class="rx-top">
           <div class="rx-hosp">Sir J. J. Hospital · Mumbai</div>
@@ -267,7 +296,7 @@
   </main>
 
 <script>
-  const ENC = {"salt":"0Rp8AXESGJDM8o1p8ywGXw==","iv":"4il0ZA6Z8X6XKyLx","data":"vOj8nwSN7paiMdn/Xnfs7igi9hqJB563Y8+rW67T++ld2Ay6Tb+E2+Z6qNKm4bm3SU/lyYBf8IYEmU15P/9+VLLf0Fa3yv7ubmWHxrEQd4v+0VQhc92SoLLkK44hLRP38YabnTqmFLStShkgP86V9TvdZcXZx81ClKH+eaYQOBJSUjK8krdrons6ErC992PWP/2k/ub0fHuhvu22709nSSKWhoAM6DRjQCMV5+CvR2w0l8LuHXkQBoOMA/GCbmLVe6aK+/jEnbQceSuITUHQo62+hx2vjTPX7Ea1y9fBUxUln21/J9GPFUJIPwPPPNve8zWGEr+9zi0KdWGVMjoHD5G9lS1ZspjQyyo7PzzkGHvmWmsygNQsCcQJvnu05hfK5n0KCSPxE38ykk7nZop2dN6lBO1Zk8lhhsrByxdtHxMEBxfWuXalXfRXm234qYZabKHc/vON2icd81af5TT7cm4QtknGwiNYoqSy5bqUn/rvnadKAbkfAaCZ8nZk4q/clfGyXAZcncbbOYpk/ZPNRO125JDLsMC6yg60RsVwh8aTUiBU1weTzleY878VJ0ss"};
+  const ENC = {"salt":"v/UVapEW0Y7uUd2nfO+lbQ==","iv":"XHQJHgb1Vmatle4n","data":"bkC62w/bAY1cZz2t6Q5u/1YIZHsKpVTFtv/oXPYOz60Qm0vS9sU21xpkWk6v8VzwpUduvI3zK14rEsGk+Kwobt0Fd9Rju7v8a04643rcMsAvOT21Vbvkf03/7/ZZ0SPq7VbknvdQTbmwURBj0vkG4XVY8qWPT+JufuuwqcmvEtNTdun46V6jpPy++YfnbN9qmSHRV7J2VFfAJDsvSJGsWhP8P6Cb6LMADXRDbVjY+MNXqApJCuWiJLcqyvMwMoBoyrNTmqmV1MgV+M2fn7HeIn3nF+TOoJbcL4ZvKTq846TEc2qNWOVKg79sbYmv/EsG4ypxBrY0hSwvQxe0/SqDmVVhJySX+SlABTjMQAU5+7kgqlryG9d9WbL1TeUI9c/wYq3iCgc1UmQwsIYlYzljt+tOw31NoUC74zKgkDIbDB0MJWRpH4Dpf5uNET53CDZIDQZcjIBfvPmJ3i5dlo3gjFeMFUGPwZM9u42XjWtK38yTbMZu3331qizC+koB/NG8OPWA/GkwPrrmrmxGz4MeGZm6YI9igZmmtuM3HVAGUHh3SMkRBudLqNCrNILAhl8g"};
   const NTFY_TOPIC = 'meet-adi-r1eyi05frk2q52';
 
   const b64 = s => Uint8Array.from(atob(s), c => c.charCodeAt(0));
@@ -409,21 +438,41 @@
   const encore = [hints[0], hints[8], hints[12], hints[13]];
   let tries = 0;
 
+  const FREE_TRIES = 15;
+  const meter = document.getElementById('meter');
+
+  function updateMeter() {
+    const owed = tries - FREE_TRIES;
+    if (owed < 1) return;
+    meter.innerHTML =
+      '⏳ meter chal raha hai — every attempt after ' + FREE_TRIES +
+      ' costs one hour of your time when I\'m in Mumbai.<br>' +
+      'Current bill: <b>' + owed + ' hour' + (owed === 1 ? '' : 's') + '</b>. Take your time. Genuinely. 🙂';
+    meter.classList.add('show');
+  }
+
   form.addEventListener('submit', async e => {
     e.preventDefault();
     armAudio();
-    const guess = skeleton(input.value);
+    const typed = input.value.trim();
+    const guess = skeleton(typed);
     if (!guess) return;
     go.disabled = true;
     hint.textContent = '';
     try {
       const secret = await decrypt(guess);
+      const owed = Math.max(0, tries - FREE_TRIES);
+      ping('🔓 Unlocked with "' + typed + '" after ' + (tries + 1) + ' attempt' + (tries ? 's' : '') +
+           (owed ? ' · bill: ' + owed + 'h' : ''));
       unlock(secret);
     } catch (_) {
       tries++;
+      ping('❌ Guess #' + tries + ': "' + typed + '"' +
+           (tries > FREE_TRIES ? ' · bill: ' + (tries - FREE_TRIES) + 'h' : ''));
       hint.textContent = tries <= hints.length
         ? hints[tries - 1]
         : encore[(tries - hints.length - 1) % encore.length];
+      updateMeter();
       form.classList.remove('shake'); void form.offsetWidth; form.classList.add('shake');
       input.select();
       go.disabled = false;
@@ -433,7 +482,6 @@
   function unlock(s) {
     document.getElementById('lockIcon').textContent = '🔓';
     document.getElementById('lockIcon').classList.add('open');
-    ping('She unlocked the prescription 🔓');
     party();
 
     document.getElementById('rxNo').textContent = 'No. ' + (Math.floor(Math.random() * 9000) + 1000);
