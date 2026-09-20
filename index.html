@@ -267,7 +267,7 @@
   </main>
 
 <script>
-  const ENC = {"salt":"zL+pniM882NLRIxuJ3O+TQ==","iv":"arx4asbaHzzTm4J0","data":"x5C4OT1AtME3xuJ9257sx0UmfKWRjBA73l1MLEAcqflN6vMgukzRYvxeP0ZP38c4sGXKS0dtKukdMxOmj2h8KU7RQKiBU51fY5jxpyfzgVvk7BZGX/yyVV+hQGk2hAD+mW73qkHh+B5/sH0+9mIvoTllgkXLXXv6PculcX/liEipIR6jKlZ9EomKLgO/8gx6gPg8AOkys7kAEZ5T9Slzb4VuHX7j5MkOy0DZtauWf/Vr+MgKieoSPPIOEwJxwQYm3RPU+BwscK02e029PRaRvcPp67nJZbW6qzA9mE/5ZrGyI1DhG1Ghl1T/zsct/jp9s0hjtzj4QLQH59gbB3YC47R9sI/Bruee769VjwY/zmd2elTCBG1V6IDc287iuy5hR3y8gscMJs6uiV2TwgI+IXUqGvBLYXf1LPIYTqh3froaoWyN1vR2xBQXN3R5V8lKFfdpSBFO+VB0+w+jY67cgCX4eP2mAc4BSMZhPD1uFspNHw/atckvZBST2NLPk108sTIGkzKJVFTPXlnc7yMtC7duvsmptEu5nIMD7XmMd+aJlPGL/LsfMr3aUIPKeaDc"};
+  const ENC = {"salt":"cZ87gfAzyXd+yVBBXma9KQ==","iv":"jcdG3i3YG+Jm1e45","data":"3V8KexmC5y0QFKVlvjCADcmWl/vMyIZYSm9FrS4104yMN493grCsBk/p0EK4/5cOqJGFsuuqVNTzo5QcIFqZuYt3fj3VzchonAZE5HMuqsYXdLXYtmezrrNybdKN4AmW9imY2aw7U5rZ4oxhJGhDW1XR6Wms7y4QTZ4/7QiWYK7Gm4egCnTcME5MXqFyZLV9gdWQ1Lh48etqPLga4xRG4WXNcpBwfl6epMjmVJRyaP0O2SMb9E5Eya0VeU46wdiILvkq0GLGpbxIwPqVe400IqjVLtTlC9JVQslVwCUgYLDZisk9JAeWx54ZqGjkax145FWzDCdy/JQ81L+XtZ772LRGpLu37LGp29twDdoeY1OoOlXU3HufJmfvbEOHiIbi8wfYl/SQOOT6WX4yT5VIR0r1XHMNQkOs3z+Gimu+mQ+sto4R6i1fhH+802hxn3xrH1qJjUJhkeMegQ/jfH9yUNfhWKDreIh4+8Y+gXCS9zzMbHUKYOlIdjlWGDAmt7fQxcJCnC6yxjPU98eOz/7CqtyRZ/AlA2/6UsHMPw4gS84JCj3zjohAhmjBpUw80dbG"};
   const NTFY_TOPIC = 'meet-adi-r1eyi05frk2q52';
 
   const b64 = s => Uint8Array.from(atob(s), c => c.charCodeAt(0));
@@ -387,14 +387,26 @@
   const go = document.getElementById('go');
   const lockScreen = document.getElementById('lock');
   const reveal = document.getElementById('reveal');
-  // A new nudge only every second wrong try, and none of them spell it out —
-  // she's meant to take her time, not be handed the answer.
+  // A different line on every wrong try. Mostly encouragement and hints that
+  // don't help at all; the real nudges are buried in between so she still gets
+  // there, just not quickly. After the list runs out, the useful ones cycle.
   const hints = [
-    'nahi… bujho 🤔',
-    'hint: it\'s a thing, not a person',
-    'hint: the first word is Latin for "about a day"',
-    'hint: the second word — your heart has one, so does the sea 🌊',
+    'nahi… but that was a very confident guess 👏',
+    'hint: it\'s not "chai". though spiritually, chai is always the answer ☕',
+    'you memorised the Krebs cycle. this is easier than that.',
+    'hint: two words. neither of them is "pizza" 🍕',
+    'galat — but honestly? cute attempt 🌸',
+    'hint: it\'s the thing you tell patients to fix and then never fix yourself',
+    'take your time. the angels are patient. mostly.',
+    'hint: the first word is Latin for "about a day" — that one\'s actually real, use it',
+    'you\'re closer than you think. probably. I can\'t see your screen 👀',
+    'hint: the second word — your heart has one, and so does the sea 🌊',
+    'OPD ki queue se zyada time lag raha hai 😅',
+    'hint: it\'s not "sleep". sleep is the thing you don\'t have.',
+    'okay okay — body clock. two words. you\'ve got this, doctor.',
+    'at this point I\'m just proud you\'re still trying 🌸 (read the riddle again, slowly)',
   ];
+  const encore = [hints[7], hints[9], hints[12], hints[13]];
   let tries = 0;
 
   form.addEventListener('submit', async e => {
@@ -409,7 +421,9 @@
       unlock(secret);
     } catch (_) {
       tries++;
-      hint.textContent = hints[Math.min(Math.floor((tries - 1) / 2), hints.length - 1)];
+      hint.textContent = tries <= hints.length
+        ? hints[tries - 1]
+        : encore[(tries - hints.length - 1) % encore.length];
       form.classList.remove('shake'); void form.offsetWidth; form.classList.add('shake');
       input.select();
       go.disabled = false;
